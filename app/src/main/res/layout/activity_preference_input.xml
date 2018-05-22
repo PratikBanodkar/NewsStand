@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pratik.com.newsstand.NewsActivities.PreferenceInput">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#E91E63"
+        app:titleTextColor="#FFFFFF"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
+        <TextView
+            android:textColor="#FFFFFF"
+            android:text="Customize Your Feed"
+            android:typeface="monospace"
+            android:textSize="24sp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:gravity="center_vertical"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/save_preferences_button"
+            android:background="@android:color/transparent"
+            android:onClick="savePreferences"
+            android:fontFamily="sans-serif-condensed"
+            android:typeface="monospace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:text="Save" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/content_scrollview"
+        android:scrollbars="vertical"
+        android:background="#EEEEEE"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/content_scrollview_onlyChild"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/showCustomOnLoad_switch"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="#111111"
+                    android:typeface="monospace"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Always show custom feed on load" />
+
+                <TextView
+                    android:text="* enable this if you want to first see your custom feed the next time you use News Stand"
+                    android:textColor="@android:color/darker_gray"
+                    android:paddingLeft="4dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingRight="4dp"
+                    android:textSize="12sp"
+                    android:typeface="monospace"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_FollowTopics"
+                android:layout_below="@+id/linearLayout1"
+                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/addToFeed_Textview"
+                    android:clickable="true"
+                    android:onClick="goToAddSourcesScreen"
+                    android:drawableEnd="@drawable/ic_add_black_48dp"
+                    android:drawableRight="@drawable/ic_add_black_48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#111111"
+                    android:text="Add to my feed"
+                    android:textSize="18sp"
+                    android:typeface="monospace"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_FollowingTopics"
+                android:layout_below="@+id/linearLayout_FollowTopics"
+                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="8dp"
+                    android:gravity="center_vertical"
+                    android:textColor="#111111"
+                    android:text="My Feed"
+                    android:textSize="18sp"
+                    android:typeface="monospace"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>

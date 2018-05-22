@@ -1,0 +1,239 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Dark_Status_No_Title_Theme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme_WithTitle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorAccent">#FFFFFF</item>
+    </style>
+
+    <style name="Read_Article_Progress_Bar" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#FFFFFF</item>
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:progressBackgroundTint">#BDBDBD</item>
+    </style>
+
+
+    <style name="TechNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#FF9800</item>
+        <item name="colorPrimaryDark">#FF9800</item>
+        <item name="colorAccent">#FF9800</item>
+    </style>
+
+    <style name="TechNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#FF9800</item>
+        <item name="colorAccent">#FF9800</item>
+        <item name="android:progressBackgroundTint">#FFB74D</item>
+    </style>
+
+    <style name="SportsNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimaryDark">#4CAF50</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SportsNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#4CAF50</item>
+        <item name="colorAccent">#4CAF50</item>
+        <item name="android:progressBackgroundTint">#81C784</item>
+    </style>
+
+    <style name="BusinessNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#3F51B5</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="BusinessNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#3F51B5</item>
+        <item name="colorAccent">#3F51B5</item>
+        <item name="android:progressBackgroundTint">#7986CB</item>
+    </style>
+
+    <style name="HealthNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#F44336</item>
+        <item name="colorPrimaryDark">#F44336</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="HealthNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#F44336</item>
+        <item name="colorAccent">#F44336</item>
+        <item name="android:progressBackgroundTint">#E57373</item>
+    </style>
+
+    <style name="GeneralNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#64DD17</item>
+        <item name="colorPrimaryDark">#64DD17</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="GeneralNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#64DD17</item>
+        <item name="colorAccent">#64DD17</item>
+        <item name="android:progressBackgroundTint">#B2FF59</item>
+    </style>
+
+    <style name="EntertainmentNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#FFC107</item>
+        <item name="colorPrimaryDark">#FFC107</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="EntertainmentNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#FFC107</item>
+        <item name="colorAccent">#FFC107</item>
+        <item name="android:progressBackgroundTint">#FFD54F</item>
+    </style>
+
+
+    <style name="ScienceNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#18FFFF</item>
+        <item name="colorPrimaryDark">#18FFFF</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ScienceNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#18FFFF</item>
+        <item name="colorAccent">#18FFFF</item>
+        <item name="android:progressBackgroundTint">#9effff</item>
+    </style>
+
+    <style name="OfflineNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#9C27B0</item>
+        <item name="colorPrimaryDark">#9C27B0</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="OfflineNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#9C27B0</item>
+        <item name="colorAccent">#9C27B0</item>
+        <item name="android:progressBackgroundTint">#BA68C8</item>
+    </style>
+
+    <style name="CustomNewsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#E91E63</item>
+        <item name="colorPrimaryDark">#E91E63</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CustomNews_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#E91E63</item>
+        <item name="colorAccent">#E91E63</item>
+        <item name="android:progressBackgroundTint">#F06292</item>
+    </style>
+
+    <style name="AddTopicsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AllArticlesTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorAccent">#FFFFFF</item>
+    </style>
+
+    <style name="AllArticles_LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="android:progressTint">#FFFFFF</item>
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:progressBackgroundTint">#F5F5F5</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_background</item>
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#303F9F</item>
+    </style>
+
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">45sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="RationalDialogStyle" parent="@style/Theme.AppCompat.Light.Dialog">
+
+        <!-- alert dialog style-->
+        <item name="alertDialogTheme">@style/AlertDialogStyle</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogStyle</item>
+    </style>
+    <!--Alert Dialogs-->
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#212121</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorSecondary">@android:color/black</item>
+        <!-- Used for the background -->
+        <item name="android:background">@android:color/white</item>
+
+        <item name="android:windowTitleStyle">@style/AlertDialogTitleTextStyle</item>
+    </style>
+
+    <style name="AlertDialogTitleTextStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+    <!--Alert Dialogs-->
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

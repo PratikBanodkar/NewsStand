@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/source_logo"
+        android:src="@drawable/ars_technica"
+        android:scaleType="fitXY"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/source_name"
+        android:text="Ars Technica"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:textSize="14sp"
+        android:typeface="monospace"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/delete_imagebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_clear_black_24dp" />
+
+</LinearLayout>

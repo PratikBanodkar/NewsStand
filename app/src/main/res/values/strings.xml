@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY appname "News Stand"><!ENTITY newsapikey "7e45b2b40cb340f08bbacee22972a71d">]>
+<resources>
+    <string name="app_name">News Stand</string>
+    <string name="newsapikey">7e45b2b40cb340f08bbacee22972a71d</string>
+    <string name="appid_admob">ca-app-pub-2391183206566070~3949285586</string>
+    <string name="test_admobid">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <!--String URLs for Top Tech Headlines for all Tech Sources-->
+    <string name="all_tech_irl">https://newsapi.org/v2/top-headlines?sources=ars-technica,,crypto-coins-news,engadget,hacker-news,recode,techcrunch,techradar,the-next-web,the-verge,wired</string>
+    <string name="ars_technica_url">https://newsapi.org/v2/top-headlines?sources=ars-technica&amp;sortBy=publishedAt</string>
+    <string name="crypto_coins_news_url">https://newsapi.org/v2/top-headlines?sources=crypto-coins-news&amp;sortBy=publishedAt</string>
+    <string name="engadget_url">https://newsapi.org/v2/top-headlines?sources=engadget&amp;sortBy=publishedAt</string>
+    <string name="hacker_news_url">https://newsapi.org/v2/top-headlines?sources=hacker-news&amp;sortBy=publishedAt</string>
+    <string name="recode_url">https://newsapi.org/v2/top-headlines?sources=recode&amp;sortBy=publishedAt</string>
+    <string name="techcrunch_url">https://newsapi.org/v2/top-headlines?sources=techcrunch&amp;sortBy=publishedAt</string>
+    <string name="techradar_url">https://newsapi.org/v2/top-headlines?sources=techradar&amp;sortBy=publishedAt</string>
+    <string name="the_next_web_url">https://newsapi.org/v2/top-headlines?sources=the-next-web&amp;sortBy=publishedAt</string>
+    <string name="the_verge_url">https://newsapi.org/v2/top-headlines?sources=the-verge&amp;sortBy=publishedAt</string>
+    <string name="wired_url">https://newsapi.org/v2/top-headlines?sources=wired&amp;sortBy=publishedAt</string>
+
+    <!--String URLs for Top Sports Headlines for all Sports Sources-->
+    <string name="bbc_sport_url">https://newsapi.org/v2/top-headlines?sources=bbc-sport</string>
+    <string name="bleacher_report_url">https://newsapi.org/v2/top-headlines?sources=bleacher-report</string>
+    <string name="espn_url">https://newsapi.org/v2/top-headlines?sources=espn</string>
+    <string name="espn_cricinfo_url">https://newsapi.org/v2/top-headlines?sources=espn-cricinfo</string>
+    <string name="football_italia_url">https://newsapi.org/v2/top-headlines?sources=football-italia</string>
+    <string name="four_four_two_url">https://newsapi.org/v2/top-headlines?sources=four-four-two</string>
+    <string name="fox_sports_url">https://newsapi.org/v2/top-headlines?sources=fox-sports</string>
+    <string name="nfl_url">https://newsapi.org/v2/top-headlines?sources=nfl-news</string>
+    <string name="nhl_url">https://newsapi.org/v2/top-headlines?sources=nhl-news</string>
+    <string name="talksport_url">https://newsapi.org/v2/top-headlines?sources=talksport</string>
+    <string name="the_sport_bible_url">https://newsapi.org/v2/top-headlines?sources=the-sport-bible</string>
+
+    <!--String URLs for Top Business Headlines for all Business Sources-->
+    <string name="afr_url">https://newsapi.org/v2/top-headlines?sources=australian-financial-review</string>
+    <string name="bloomberg_url">https://newsapi.org/v2/top-headlines?sources=bloomberg</string>
+    <string name="business_insider_url">https://newsapi.org/v2/top-headlines?sources=business-insider</string>
+    <string name="cnbc_url">https://newsapi.org/v2/top-headlines?sources=cnbc</string>
+    <string name="economist_url">https://newsapi.org/v2/top-headlines?sources=the-economist</string>
+    <string name="financial_post_url">https://newsapi.org/v2/top-headlines?sources=financial-post</string>
+    <string name="financial_times_url">https://newsapi.org/v2/top-headlines?sources=financial-times</string>
+    <string name="fortune_url">https://newsapi.org/v2/top-headlines?sources=fortune</string>
+    <string name="wsj_url">https://newsapi.org/v2/top-headlines?sources=the-wall-street-journal</string>
+
+    <!--String URLs for Top Health Headlines for all Health Sources-->
+    <string name="mnt_url">https://newsapi.org/v2/top-headlines?sources=medical-news-today</string>
+
+    <!--String URLs for Top General Headlines for all General Sources-->
+    <string name="abc_news_url">https://newsapi.org/v2/top-headlines?sources=abc-news</string>
+    <string name="abc_news_au_url">https://newsapi.org/v2/top-headlines?sources=abc-news-au</string>
+    <string name="aljazeera_english_url">https://newsapi.org/v2/top-headlines?sources=al-jazeera-english</string>
+    <string name="associated_press_url">https://newsapi.org/v2/top-headlines?sources=associated-press</string>
+    <string name="axios_url">https://newsapi.org/v2/top-headlines?sources=axios</string>
+    <string name="bbc_news_url">https://newsapi.org/v2/top-headlines?sources=bbc-news</string>
+    <string name="breitbart_url">https://newsapi.org/v2/top-headlines?sources=breitbart-news</string>
+    <string name="cbc_news_url">https://newsapi.org/v2/top-headlines?sources=cbc-news</string>
+    <string name="cbs_news_url">https://newsapi.org/v2/top-headlines?sources=cbs-news</string>
+    <string name="cnn_url">https://newsapi.org/v2/top-headlines?sources=cnbc</string>
+    <string name="fox_news_url">https://newsapi.org/v2/top-headlines?sources=fox-news</string>
+    <string name="google_news_url">https://newsapi.org/v2/top-headlines?sources=google-news</string>
+    <string name="independent_url">https://newsapi.org/v2/top-headlines?sources=independent</string>
+    <string name="metro_url">https://newsapi.org/v2/top-headlines?sources=metro</string>
+    <string name="mirror_url">https://newsapi.org/v2/top-headlines?sources=mirror</string>
+    <string name="msnbc_url">https://newsapi.org/v2/top-headlines?sources=msnbc</string>
+    <string name="nbc_news_url">https://newsapi.org/v2/top-headlines?sources=nbc-news</string>
+    <string name="new_york_magazine_url">https://newsapi.org/v2/top-headlines?sources=new-york-magazine</string>
+    <string name="news_com_au_url">https://newsapi.org/v2/top-headlines?sources=news-com-au</string>
+    <string name="news_24_url">https://newsapi.org/v2/top-headlines?sources=news24</string>
+    <string name="newsweek_url">https://newsapi.org/v2/top-headlines?sources=newsweek</string>
+    <string name="politico_url">https://newsapi.org/v2/top-headlines?sources=politico</string>
+    <string name="reddit_url">https://newsapi.org/v2/top-headlines?sources=reddit-r-all</string>
+    <string name="reuters_url">https://newsapi.org/v2/top-headlines?sources=reuters</string>
+    <string name="rte_url">https://newsapi.org/v2/top-headlines?sources=rte</string>
+    <string name="the_globe_and_mail_url">https://newsapi.org/v2/top-headlines?sources=the-globe-and-mail</string>
+    <string name="the_guardian_url">https://newsapi.org/v2/top-headlines?sources=the-guardian-uk</string>
+    <string name="the_hill_url">https://newsapi.org/v2/top-headlines?sources=the-hill</string>
+    <string name="the_hindu_url">https://newsapi.org/v2/top-headlines?sources=the-hindu</string>
+    <string name="the_huffington_post_url">https://newsapi.org/v2/top-headlines?sources=the-huffington-post</string>
+    <string name="the_new_york_times_url">https://newsapi.org/v2/top-headlines?sources=the-new-york-times</string>
+    <string name="the_telegraph_url">https://newsapi.org/v2/top-headlines?sources=the-telegraph</string>
+    <string name="the_toi_url">https://newsapi.org/v2/top-headlines?sources=the-times-of-india</string>
+    <string name="the_washington_post_url">https://newsapi.org/v2/top-headlines?sources=the-washington-post</string>
+    <string name="time_url">https://newsapi.org/v2/top-headlines?sources=time</string>
+    <string name="usa_today_url">https://newsapi.org/v2/top-headlines?sources=usa-today</string>
+    <string name="vice_news_url">https://newsapi.org/v2/top-headlines?sources=vice-news</string>
+
+    <!--String URLs for Top Entertainment Headlines for all Entertainment Sources-->
+    <string name="buzzfeed_url">https://newsapi.org/v2/top-headlines?sources=buzzfeed</string>
+    <string name="daily_mail_url">https://newsapi.org/v2/top-headlines?sources=daily-mail</string>
+    <string name="entertainment_weekly_url">https://newsapi.org/v2/top-headlines?sources=entertainment-weekly</string>
+    <string name="ign_url">https://newsapi.org/v2/top-headlines?sources=ign</string>
+    <string name="mashable_url">https://newsapi.org/v2/top-headlines?sources=mashable</string>
+    <string name="mtv_news_url">https://newsapi.org/v2/top-headlines?sources=mtv-news</string>
+    <string name="mtv_news_uk_url">https://newsapi.org/v2/top-headlines?sources=mtv-news-uk</string>
+    <string name="polygon_url">https://newsapi.org/v2/top-headlines?sources=polygon</string>
+    <string name="the_lad_bible_url">https://newsapi.org/v2/top-headlines?sources=the-lad-bible</string>
+
+    <!--String URLs for Top Science Headlines for all Science Sources-->
+    <string name="nat_geo_url">https://newsapi.org/v2/top-headlines?sources=national-geographic</string>
+    <string name="new_scientist_url">https://newsapi.org/v2/top-headlines?sources=new-scientist</string>
+    <string name="next_big_future_url">https://newsapi.org/v2/top-headlines?sources=next-big-future</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="subtitle">Stay updated with all the news around the world in the field of Business, Technology, Sports and more.</string>
+    <string name="title_activity_library_tabbed">LibraryTabbedActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="permission_android.permission.WRITE_EXTERNAL_STORAGE">News Stand uses the device\'s storage for caching article images so that they load faster</string>
+    <string name="permission_denied_storage">News Stand uses the device\'s storage for caching article images so that they load faster</string>
+    <string name="permission_default_message">To make this action please open the settings and manually enable the requested permission.</string>
+</resources>

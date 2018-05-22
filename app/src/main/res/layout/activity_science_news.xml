@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    >
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="#18FFFF"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:title="Science">
+
+                <ImageView
+                    android:id="@+id/science_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/science"
+                    android:transitionName="libraryToScience"
+                    app:layout_collapseMode="parallax" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#18FFFF"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+                </android.support.v7.widget.Toolbar>
+
+                <LinearLayout
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|end"
+                    app:layout_collapseMode="pin"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:id="@+id/refresh_feed_imagebutton"
+                        android:onClick="refreshFeed"
+                        android:padding="4dp"
+                        android:scaleType="centerInside"
+                        android:layout_marginEnd="4dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_refresh_white_48dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:id="@+id/parent_relative_layout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/filterByValue_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="#212121"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:text="Showing news from"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:typeface="monospace" />
+
+            <HorizontalScrollView
+                android:layout_below="@+id/filterByValue_textview"
+                android:id="@+id/filter_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#212121"
+                android:fillViewport="true"
+                android:measureAllChildren="false"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/nat_geo_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/national_geographic" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/nat_geo_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="National Geographic"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/new_scientist_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/new_scientist" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/new_scientist_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:paddingEnd="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingStart="8dp"
+                            android:text="New Scientist"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/next_big_future_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/next_big_future" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/next_big_future_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:paddingEnd="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingStart="8dp"
+                            android:text="Next Big Future"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:padding="8dp"
+                android:background="#212121"
+                android:gravity="center"
+                android:layout_below="@id/filter_scrollview"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingBottom="8dp"
+                android:typeface="monospace"
+                android:id="@+id/fetching_news_label"
+                android:text="Fetching Top Headlines..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:background="#212121"
+                android:id="@+id/progressBar"
+                android:indeterminate="true"
+                android:theme="@style/ScienceNews_LinearProgress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fetching_news_label" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/news_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBar"/>
+
+        </RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>
+
+
+

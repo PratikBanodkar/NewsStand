@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.Android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    card_view:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    card_view:cardElevation="8dp"
+    android:focusable="true"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#424242">
+
+        <TextView
+            android:id="@+id/card_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Technology"
+            android:textColor="#E0E0E0"
+            android:textSize="20sp"
+            android:typeface="monospace" />
+
+        <Button
+            android:visibility="invisible"
+            android:id="@+id/more_button"
+            android:padding="0dp"
+            android:textColor="#E0E0E0"
+            android:textSize="16sp"
+            android:typeface="monospace"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More"/>
+
+        <HorizontalScrollView
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/card_header"
+            android:id="@+id/sources_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:fillViewport="true"
+            android:measureAllChildren="false"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/layout_inside_hsv"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>

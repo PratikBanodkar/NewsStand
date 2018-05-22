@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pratik.com.newsstand">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".Connectivity.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/applogo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/applogo_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".WelcomeScreen" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Library"
+            android:theme="@style/AppTheme_WithTitle" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".NewsActivities.TechNewsActivity"
+            android:theme="@style/TechNewsTheme" />
+        <activity
+            android:name=".NewsActivities.SportsNewsActivity"
+            android:theme="@style/SportsNewsTheme" />
+        <activity
+            android:name=".NewsActivities.BusinessNewsActivity"
+            android:theme="@style/BusinessNewsTheme" />
+        <activity
+            android:name=".NewsActivities.HealthNewsActivity"
+            android:theme="@style/HealthNewsTheme" />
+        <activity
+            android:name=".NewsActivities.GeneralNewsActivity"
+            android:theme="@style/GeneralNewsTheme" />
+        <activity
+            android:name=".NewsActivities.EntertainmentNewsActivity"
+            android:theme="@style/EntertainmentNewsTheme" />
+        <activity
+            android:name=".NewsActivities.ScienceNewsActivity"
+            android:theme="@style/ScienceNewsTheme" />
+        <activity
+            android:name=".NewsActivities.ReadArticleActivity"
+            android:theme="@style/Dark_Status_No_Title_Theme" />
+        <activity
+            android:name=".NewsActivities.OfflineArticlesActivity"
+            android:theme="@style/OfflineNewsTheme" />
+        <activity
+            android:name=".NewsActivities.CustomFeed"
+            android:theme="@style/CustomNewsTheme" />
+        <activity
+            android:name=".NewsActivities.PreferenceInput"
+            android:theme="@style/CustomNewsTheme" />
+        <activity
+            android:name=".NewsActivities.AddTopicsActivity"
+            android:theme="@style/CustomNewsTheme" />
+        <activity
+            android:name=".AllArticlesActivites.AllArticlesActivity"
+            android:theme="@style/AllArticlesTheme"/>
+
+        <receiver
+            android:name=".Connectivity.ConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

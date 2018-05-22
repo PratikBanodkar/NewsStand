@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pratik.com.newsstand.NewsActivities.ReadArticleActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/root_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:background="#212121"
+            android:id="@+id/progressBar"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="10"
+            android:theme="@style/Read_Article_Progress_Bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fetching_news_label" />
+
+
+        <WebView
+            android:layout_weight="1"
+            android:id="@+id/article_webview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        </WebView>
+
+        <Button
+            android:id="@+id/close_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:fontFamily="sans-serif-condensed"
+            android:onClick="closeArticleActivity"
+            android:text="Close"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:typeface="monospace" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

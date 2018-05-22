@@ -1,0 +1,1391 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    >
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="#64DD17"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:title="General">
+
+                <ImageView
+                    android:id="@+id/general_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/general"
+                    android:transitionName="libraryToGeneral"
+                    app:layout_collapseMode="parallax" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#64DD17"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+                </android.support.v7.widget.Toolbar>
+
+                <LinearLayout
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|end"
+                    app:layout_collapseMode="pin"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:id="@+id/refresh_feed_imagebutton"
+                        android:onClick="refreshFeed"
+                        android:padding="4dp"
+                        android:scaleType="centerInside"
+                        android:layout_marginEnd="4dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_refresh_white_48dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/parent_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/filterByValue_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="#212121"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:text="Showing news from"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:typeface="monospace" />
+
+            <HorizontalScrollView
+                android:layout_below="@+id/filterByValue_textview"
+                android:id="@+id/filter_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#212121"
+                android:fillViewport="true"
+                android:measureAllChildren="false"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/abc_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/abc_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/abc_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="ABC News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/abc_news_au_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/abc_news_au" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/abc_news_au_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="ABC News AU"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/al_jazeera_english_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/al_jazeera_english" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/al_jazeera_english_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:paddingEnd="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingStart="8dp"
+                            android:text="AlJazeera English"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/associated_press_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/associated_press" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/associated_press_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Associated Press"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/axios_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/axios" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/axios_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Axios"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/bbc_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/bbc_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/bbc_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="BBC News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/breitbart_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/breitbart_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/breitbart_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Breitbart News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/cbc_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cbc_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cbc_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="CBC News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/cbs_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cbs_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cbs_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="CBS News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/cnn_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/cnn" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cnn_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="CNN"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/fox_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/fox_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/fox_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Fox News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/google_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/google_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/google_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Google News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/independent_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/independent" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/independent_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Independent"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/metro_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/metro" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/metro_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Metro"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/mirror_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/mirror" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/mirror_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Mirror"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/msnbc_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/msnbc" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/msnbc_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="MSNBC"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/nbc_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/nbc_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/nbc_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="NBC News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/new_york_magazine_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/new_york_magazine" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/new_york_magazine_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="New York Magazine"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/news_com_au_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/news_com_au" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/news_com_au_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="News.com.au"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/news24_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/news24" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/news24_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="News24"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/newsweek_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/newsweek" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/newsweek_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Newsweek"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/politico_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/politico" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/politico_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Politico"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/reddit_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/reddit_r_all" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/reddit_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Reddit /r/all"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/reuters_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/reuters" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/reuters_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Reuters"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/rte_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/rte" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/rte_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Rte.ie"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_globe_and_mail_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_globe_and_mail" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_globe_and_mail_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Globe and Mail"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_guardian_uk_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_guardian_uk" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_guardian_uk_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Guardian UK"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_hill_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_hill" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_hill_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Hill"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_hindu_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_hindu" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_hindu_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Hindu"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_huffington_post_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_huffington_post" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_huffington_post_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Huffington Post"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_new_york_times_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_new_york_times" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_new_york_times_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The New York Times"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_telegraph_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_telegraph" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_telegraph_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Telegraph"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_times_of_india_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_times_of_india" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_times_of_india_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Times of India"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_washington_post_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/the_washington_post" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_washington_post_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="The Washington Post"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/time_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/time" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/time_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Time"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/the_usa_today_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/usa_today" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/the_usa_today_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="USA Today"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/vice_news_logo"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@android:color/transparent"
+                            android:onClick="filterChanged"
+                            android:padding="8dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/vice_news" />
+
+                        <TextView
+                            android:paddingLeft="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingRight="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/vice_news_logo"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Vice News"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:typeface="monospace" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:layout_below="@+id/filterByValue_textview"
+                android:id="@+id/filterGrid_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#212121"
+                android:fillViewport="true"
+                android:measureAllChildren="false"
+                android:scrollbars="none">
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:padding="8dp"
+                android:background="#212121"
+                android:gravity="center"
+                android:layout_below="@id/filter_scrollview"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingBottom="8dp"
+                android:typeface="monospace"
+                android:id="@+id/fetching_news_label"
+                android:text="Fetching Top Headlines..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fetching_news_label"
+                android:background="#212121"
+                android:indeterminate="true"
+                android:theme="@style/GeneralNews_LinearProgress" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/news_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBar"/>
+
+        </RelativeLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>
+
+
+
