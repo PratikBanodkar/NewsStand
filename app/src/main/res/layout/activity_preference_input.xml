@@ -98,7 +98,9 @@
                 android:id="@+id/linearLayout_FollowTopics"
                 android:layout_below="@+id/linearLayout1"
                 android:orientation="vertical"
-                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -126,12 +128,15 @@
                 android:id="@+id/linearLayout_FollowingTopics"
                 android:layout_below="@+id/linearLayout_FollowTopics"
                 android:orientation="vertical"
-                android:layout_margin="8dp"
+                android:layout_marginStart ="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/textview_myFeedHeader"
                     android:padding="8dp"
                     android:gravity="center_vertical"
                     android:textColor="#111111"
@@ -142,6 +147,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/sources_reyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
         </RelativeLayout>
