@@ -16,7 +16,7 @@
         android:textColor="#FFFFFF"
         android:text="Add to Feed"
         android:typeface="monospace"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:singleLine="true"
         android:ellipsize="marquee"
         android:gravity="center_vertical"
@@ -69,7 +69,7 @@
                         android:layout_toEndOf="@+id/iv_tech_header"
                         android:fontFamily="sans-serif-condensed"
                         android:text="Technology"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:typeface="monospace" />
 
                     <ImageButton
@@ -110,7 +110,7 @@
                         android:layout_toEndOf="@+id/iv_sports_header"
                         android:fontFamily="sans-serif-condensed"
                         android:text="Sports"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:typeface="monospace" />
 
                     <ImageButton
@@ -151,7 +151,7 @@
                         android:layout_toEndOf="@+id/iv_business_header"
                         android:fontFamily="sans-serif-condensed"
                         android:text="Business"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:typeface="monospace" />
 
                     <ImageButton
@@ -192,7 +192,7 @@
                         android:layout_toEndOf="@+id/iv_health_header"
                         android:fontFamily="sans-serif-condensed"
                         android:text="Health"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:typeface="monospace" />
 
                     <ImageButton
@@ -233,7 +233,7 @@
                         android:layout_toEndOf="@+id/iv_general_header"
                         android:fontFamily="sans-serif-condensed"
                         android:text="General"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:typeface="monospace" />
 
                     <ImageButton
@@ -274,7 +274,7 @@
                         android:layout_toEndOf="@+id/iv_entertainment_header"
                         android:fontFamily="sans-serif-condensed"
                         android:text="Entertainment"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:typeface="monospace" />
 
                     <ImageButton
@@ -315,7 +315,7 @@
                         android:layout_toEndOf="@+id/iv_science_header"
                         android:fontFamily="sans-serif-condensed"
                         android:text="Science"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:typeface="monospace" />
                     <ImageButton
                         android:onClick="changeViewToShow"
