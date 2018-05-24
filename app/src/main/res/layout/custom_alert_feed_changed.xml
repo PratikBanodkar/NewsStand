@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:id="@+id/alert_layout"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/logo_imageview"
+        android:src="@mipmap/applogo_round"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/alert_msg"
+        android:layout_alignStart="@+id/alert_msg" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alert_title"
+        android:paddingStart="16dp"
+        android:text="Feed Changed !"
+        android:typeface="monospace"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="22sp"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/logo_imageview"
+        android:layout_toEndOf="@+id/logo_imageview" />
+    <View
+        android:layout_marginTop="8dp"
+        android:id="@+id/horizontal_line1"
+        android:layout_below="@+id/logo_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        />
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alert_msg"
+        android:typeface="monospace"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Seems like your feed settings have changed. Do you want to save them ?"
+        android:textSize="16sp"
+        android:layout_below="@+id/horizontal_line1"/>
+    <View
+        android:layout_marginTop="8dp"
+        android:id="@+id/horizontal_line2"
+        android:layout_below="@+id/alert_msg"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/horizontal_line2"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:id="@+id/alert_yes"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Yes"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="0dp"
+            android:id="@+id/alert_no"
+            android:text="No"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/alert_yes"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+</RelativeLayout>
