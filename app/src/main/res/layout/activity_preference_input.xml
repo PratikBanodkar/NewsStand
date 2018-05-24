@@ -19,7 +19,7 @@
             android:textColor="#FFFFFF"
             android:text="Customize Your Feed"
             android:typeface="monospace"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:singleLine="true"
             android:ellipsize="marquee"
             android:gravity="center_vertical"
