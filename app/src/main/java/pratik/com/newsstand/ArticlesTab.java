@@ -73,7 +73,7 @@ public class ArticlesTab extends Fragment {
         sportsSourceLogos.add(R.drawable.talksport);sportsSourceLogos.add(R.drawable.the_sport_bible);
 
         ArrayList sportsSourceIDs = new ArrayList();
-        sportsSourceIDs.add("bbc-sport");sportsSourceIDs.add("bleacher-report");sportsSourceIDs.add("espn");sportsSourceIDs.add("espn-cricinfo");sportsSourceIDs.add("football-italia");
+        sportsSourceIDs.add("bbc-sport");sportsSourceIDs.add("bleacher-report");sportsSourceIDs.add("espn");sportsSourceIDs.add("espn-cric-info");sportsSourceIDs.add("football-italia");
         sportsSourceIDs.add("four-four-two");sportsSourceIDs.add("fox-sports");sportsSourceIDs.add("nfl");sportsSourceIDs.add("nhl");sportsSourceIDs.add("talksport");
         sportsSourceIDs.add("the-sport-bible");
 
