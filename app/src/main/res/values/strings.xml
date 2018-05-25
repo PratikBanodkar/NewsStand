@@ -23,7 +23,7 @@
     <string name="bbc_sport_url">https://newsapi.org/v2/top-headlines?sources=bbc-sport</string>
     <string name="bleacher_report_url">https://newsapi.org/v2/top-headlines?sources=bleacher-report</string>
     <string name="espn_url">https://newsapi.org/v2/top-headlines?sources=espn</string>
-    <string name="espn_cricinfo_url">https://newsapi.org/v2/top-headlines?sources=espn-cricinfo</string>
+    <string name="espn_cricinfo_url">https://newsapi.org/v2/top-headlines?sources=espn-cric-info</string>
     <string name="football_italia_url">https://newsapi.org/v2/top-headlines?sources=football-italia</string>
     <string name="four_four_two_url">https://newsapi.org/v2/top-headlines?sources=four-four-two</string>
     <string name="fox_sports_url">https://newsapi.org/v2/top-headlines?sources=fox-sports</string>
