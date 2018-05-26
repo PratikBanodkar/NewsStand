@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY appname "News Stand"><!ENTITY newsapikey "7e45b2b40cb340f08bbacee22972a71d">]>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY appname "News Stand"><!ENTITY newsapikey "YOUR NEWS API KEY HERE">]>
 <resources>
     <string name="app_name">News Stand</string>
     <string name="newsapikey">"YOUR NEWS API KEY HERE"</string>
