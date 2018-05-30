@@ -149,7 +149,7 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
 
         recyclerView = findViewById(R.id.news_recycler_view);
         layoutManager = new LinearLayoutManager(this);
-        //recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
@@ -165,7 +165,7 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
 
 
         final RadioButton week_radiobutton = findViewById(R.id.radio_week);
-        RadioButton month_radiobutton = findViewById(R.id.radio_month);
+        final RadioButton month_radiobutton = findViewById(R.id.radio_month);
         RadioGroup radioGroup = findViewById(R.id.filter_layout_radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -306,6 +306,8 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
         RadioGroup fLRG = findViewById(R.id.filter_layout_radio_group);
         if(fLRG.getVisibility() == View.GONE)
             fLRG.setVisibility(View.VISIBLE);
+        LinearLayout noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetLayout.setVisibility(View.GONE);
         new fetch(listener).execute(endpoint);
     }
 
