@@ -60,6 +60,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -98,14 +99,11 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
     private boolean updateFeedRequested = false;
     private RecyclerView recyclerView;
     private TechRecyclerAdapter recyclerAdapter;
-    public List<NewsItemObject> techBookmarked = new ArrayList<NewsItemObject>();
-    public ArrayList<NewsItemObject> bookmarkedArticles = new ArrayList<>();
     private boolean filter = false;
     private String news_source = new String();
     private String rationalMessage;
     private String[] permissions = new String[1];
     private static final int REQUEST_CODE = 1000;
-    private String bookmarked_urlResponse;
 
 
     @Override
@@ -116,6 +114,11 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        MyApplication.getInstance().removeConnectivityListener();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,10 +145,29 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
         }
         else
         {
-            checkConnection();
-            //fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
 
+    }
+
+    public void doOnNoInternet(){
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        recyclerView.setVisibility(View.GONE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        pBar.setVisibility(View.GONE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        fNL.setVisibility(View.GONE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        fSV.setVisibility(View.GONE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        fBV.setVisibility(View.GONE);
+
+        LinearLayout noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -153,9 +175,8 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
         showSnack(isConnected);
     }
 
-    private void checkConnection() {
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        showSnack(isConnected);
+    private boolean checkConnection() {
+        return ConnectivityReceiver.isConnected();
     }
 
     private void showSnack(boolean isConnected) {
@@ -163,13 +184,24 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
         int color;
         if (isConnected) {
             fetchNews();
-            message = "Good! Connected to Internet";
-            color = Color.WHITE;
         } else {
-            message = "Sorry! Not connected to internet";
-            color = Color.RED;
-        }
+            message = "No internet connection";
+            color = Color.rgb(255,152,0);
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
 
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(color);
+            snackbar.show();
+        }
+    }
+
+    private void showNoInternetSnackBar(){
+        String message;
+        int color;
+        message = "No internet connection";
+        color = Color.rgb(255,152,0);
         Snackbar snackbar = Snackbar
                 .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
 
@@ -181,6 +213,21 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
 
     public void fetchNews(){
         fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        if(recyclerView.getVisibility() == View.GONE)
+            recyclerView.setVisibility(View.VISIBLE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        if(pBar.getVisibility() == View.GONE)
+            pBar.setVisibility(View.VISIBLE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        if(fNL.getVisibility() == View.GONE)
+            fNL.setVisibility(View.VISIBLE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        if(fSV.getVisibility() == View.GONE)
+            fSV.setVisibility(View.VISIBLE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        if(fBV.getVisibility() == View.GONE)
+            fBV.setVisibility(View.VISIBLE);
         new fetch(listener).execute(news_source);
     }
 
@@ -198,8 +245,11 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
                 requestPermission();
             }
         } else {
-            checkConnection();
-            //fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
     }
 
@@ -223,9 +273,17 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
             case REQUEST_CODE:
                 int index = PermissionUtils.verifyPermissions(grantResults);
                 if (index == -1) {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 } else {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 }
                 break;
         }
@@ -267,163 +325,170 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
     }
 
     public void filterChanged(View v){
-        filter = true;
-        recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        recyclerAdapter = (TechRecyclerAdapter) recyclerView.getAdapter();
-        recyclerAdapter.clear();
-        switch (v.getId()){
-            case R.id.ars_technica_logo:
-                news_source = getResources().getString(R.string.ars_technica_url);
-                View view = findViewById(R.id.crypto_coin_news_logo);   view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.crypto_coin_news_logo:
-                news_source = getResources().getString(R.string.crypto_coins_news_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.engadget_logo:
-                news_source = getResources().getString(R.string.engadget_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.hacker_news_logo:
-                news_source = getResources().getString(R.string.hacker_news_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.recode_logo:
-                news_source = getResources().getString(R.string.recode_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.techcrunch_logo:
-                news_source = getResources().getString(R.string.techcrunch_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.techradar_logo:
-                news_source = getResources().getString(R.string.techradar_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.the_next_web_logo:
-                news_source = getResources().getString(R.string.the_next_web_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.the_verge_logo:
-                news_source = getResources().getString(R.string.the_verge_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
-                break;
-            case R.id.wired_logo:
-                news_source = getResources().getString(R.string.wired_url);
-                v.setAlpha((float)1.0);
-                view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
-                view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
-                view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
-                break;
-        }
+        if(!checkConnection())
+            showNoInternetSnackBar();
+        else{
+            filter = true;
+            recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            recyclerAdapter = (TechRecyclerAdapter) recyclerView.getAdapter();
+            recyclerAdapter.clear();
+            switch (v.getId()){
+                case R.id.ars_technica_logo:
+                    news_source = getResources().getString(R.string.ars_technica_url);
+                    View view = findViewById(R.id.crypto_coin_news_logo);   view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.crypto_coin_news_logo:
+                    news_source = getResources().getString(R.string.crypto_coins_news_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.engadget_logo:
+                    news_source = getResources().getString(R.string.engadget_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.hacker_news_logo:
+                    news_source = getResources().getString(R.string.hacker_news_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.recode_logo:
+                    news_source = getResources().getString(R.string.recode_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.techcrunch_logo:
+                    news_source = getResources().getString(R.string.techcrunch_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.techradar_logo:
+                    news_source = getResources().getString(R.string.techradar_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.the_next_web_logo:
+                    news_source = getResources().getString(R.string.the_next_web_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.the_verge_logo:
+                    news_source = getResources().getString(R.string.the_verge_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.wired_logo);                   view.setAlpha((float)0.2);
+                    break;
+                case R.id.wired_logo:
+                    news_source = getResources().getString(R.string.wired_url);
+                    v.setAlpha((float)1.0);
+                    view = findViewById(R.id.ars_technica_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.crypto_coin_news_logo);        view.setAlpha((float)0.2);
+                    view = findViewById(R.id.engadget_logo);                view.setAlpha((float)0.2);
+                    view = findViewById(R.id.hacker_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.recode_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techcrunch_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.techradar_logo);               view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_next_web_logo);            view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_verge_logo);               view.setAlpha((float)0.2);
+                    break;
+            }
 
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
+            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+            new fetch(listener).execute(news_source);
+        }
     }
 
     public void refreshFeed(View view) {
-        updateFeedRequested = true;
-        recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        recyclerAdapter = (TechRecyclerAdapter) recyclerView.getAdapter();
-        recyclerAdapter.clear();
-        TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
-        if (fetchingNewsLabel.getVisibility()==View.GONE){
-            fetchingNewsLabel.setVisibility(View.VISIBLE);
+        if(!checkConnection())
+            showNoInternetSnackBar();
+        else{
+            updateFeedRequested = true;
+            recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            recyclerAdapter = (TechRecyclerAdapter) recyclerView.getAdapter();
+            recyclerAdapter.clear();
+            TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
+            ProgressBar progressBar = findViewById(R.id.progressBar);
+            if (fetchingNewsLabel.getVisibility()==View.GONE){
+                fetchingNewsLabel.setVisibility(View.VISIBLE);
+            }
+            if(progressBar.getVisibility()==View.GONE)
+                progressBar.setVisibility(View.VISIBLE);
+
+            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+            new fetch(listener).execute(news_source);
         }
-        if(progressBar.getVisibility()==View.GONE)
-            progressBar.setVisibility(View.VISIBLE);
-
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
-
     }
 
     public void  addToBookmarkedArticles(NewsItemObject newsObj){
@@ -471,6 +536,8 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
         prefsEditor.commit();
 
     }
+
+
 
     public class TechRecyclerAdapter extends RecyclerView.Adapter<TechRecyclerAdapter.ViewHolder> {
         private ArrayList<NewsItemObject> newsItemObjects;
@@ -543,10 +610,13 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
                         Toast.makeText(TechNewsActivity.this, "Article removed from offline reading", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        newsItemObjects.get(position).setBookmarked(true);
-                        new SaveArticleTask(holder).execute(newsItemObjects.get(position));
+                        if(!checkConnection())
+                            showNoInternetSnackBar();
+                        else{
+                            newsItemObjects.get(position).setBookmarked(true);
+                            new SaveArticleTask(holder).execute(newsItemObjects.get(position));
+                        }
                     }
-
                     holder.swipeRevealLayout.close(true);
                 }
             });
@@ -739,7 +809,6 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
             filterBySourceLabel.setVisibility(View.VISIBLE);
             hsv.setVisibility(View.VISIBLE);
             newsItemObjectArrayList = result;
-            System.out.println("POST-EXEC:is this refresh request? "+updateFeedRequested);
 
             if(updateFeedRequested){
                 showUpdateFeedSnackBar();
@@ -774,7 +843,7 @@ public class TechNewsActivity extends AppCompatActivity implements ConnectivityR
 
     private void showUpdateFeedSnackBar() {
         RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
-        Snackbar snackbar = Snackbar.make(root_relative_layout, "FEED UPDATED", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(root_relative_layout, "Feed Updated", Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.rgb(255,152,0));
