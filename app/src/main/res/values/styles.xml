@@ -173,7 +173,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#212121</item>
         <item name="colorPrimaryDark">#212121</item>
-        <item name="colorAccent">#212121</item>
+        <item name="colorAccent">#FFFFFF</item>
     </style>
 
     <style name="AllArticles_LinearProgress" parent="Theme.AppCompat.Light">
