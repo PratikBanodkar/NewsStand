@@ -372,6 +372,9 @@ public class CustomFeed extends AppCompatActivity implements ConnectivityReceive
         TextView fNL = findViewById(R.id.fetching_news_label);
         if(fNL.getVisibility() == View.GONE)
             fNL.setVisibility(View.VISIBLE);
+
+        LinearLayout noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetLayout.setVisibility(View.GONE);
         new fetch(listener).execute(feedURL);
     }
 

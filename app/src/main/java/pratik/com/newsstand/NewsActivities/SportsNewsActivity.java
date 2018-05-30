@@ -209,6 +209,9 @@ public class SportsNewsActivity extends AppCompatActivity implements Connectivit
         TextView fBV = findViewById(R.id.filterByValue_textview);
         if(fBV.getVisibility() == View.GONE)
             fBV.setVisibility(View.VISIBLE);
+
+        LinearLayout noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetLayout.setVisibility(View.GONE);
         new fetch(listener).execute(news_source);
     }
 
