@@ -42,15 +42,19 @@ import android.widget.Toast;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
@@ -59,15 +63,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import pratik.com.newsstand.Connectivity.ConnectivityReceiver;
+import pratik.com.newsstand.Connectivity.MyApplication;
+import pratik.com.newsstand.ExclusionStrategy_Bitmap_Drawable;
 import pratik.com.newsstand.NewsFetching.ArticleImageFetching.ImageLoader;
 import pratik.com.newsstand.NewsFetching.AsyncTaskCompleteListener;
 import pratik.com.newsstand.NewsFetching.NewsItemObject;
 import pratik.com.newsstand.PermissionUtils;
 import pratik.com.newsstand.R;
 
-public class HealthNewsActivity extends AppCompatActivity {
+public class HealthNewsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     private boolean updateFeedRequested = false;
     private static String healthURL_mnt;
@@ -78,6 +86,20 @@ public class HealthNewsActivity extends AppCompatActivity {
     private String rationalMessage;
     private String[] permissions = new String[1];
     private static final int REQUEST_CODE = 1000;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        MyApplication.getInstance().removeConnectivityListener();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +116,6 @@ public class HealthNewsActivity extends AppCompatActivity {
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
 
         final RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
-        //ViewCompat.setNestedScrollingEnabled(recyclerView,false);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         healthURL_mnt = getResources().getString(R.string.mnt_url);
@@ -108,16 +129,90 @@ public class HealthNewsActivity extends AppCompatActivity {
         }
         else
         {
-            fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
-        /*
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);*/
 
     }
 
+    public void doOnNoInternet(){
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        recyclerView.setVisibility(View.GONE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        pBar.setVisibility(View.GONE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        fNL.setVisibility(View.GONE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        fSV.setVisibility(View.GONE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        fBV.setVisibility(View.GONE);
+
+        LinearLayout noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+
+    private boolean checkConnection() {
+        return ConnectivityReceiver.isConnected();
+    }
+
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            fetchNews();
+        } else {
+            message = "No internet connection";
+            color = Color.rgb(244,67,54);
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
+
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(color);
+            snackbar.show();
+        }
+    }
+
+    private void showNoInternetSnackBar(){
+        String message;
+        int color;
+        message = "No internet connection";
+        color = Color.rgb(244,67,54);
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+
     public void fetchNews(){
         fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        if(recyclerView.getVisibility() == View.GONE)
+            recyclerView.setVisibility(View.VISIBLE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        if(pBar.getVisibility() == View.GONE)
+            pBar.setVisibility(View.VISIBLE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        if(fNL.getVisibility() == View.GONE)
+            fNL.setVisibility(View.VISIBLE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        if(fSV.getVisibility() == View.GONE)
+            fSV.setVisibility(View.VISIBLE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        if(fBV.getVisibility() == View.GONE)
+            fBV.setVisibility(View.VISIBLE);
         new fetch(listener).execute(news_source);
     }
 
@@ -135,7 +230,11 @@ public class HealthNewsActivity extends AppCompatActivity {
                 requestPermission();
             }
         } else {
-            fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
     }
 
@@ -159,9 +258,17 @@ public class HealthNewsActivity extends AppCompatActivity {
             case REQUEST_CODE:
                 int index = PermissionUtils.verifyPermissions(grantResults);
                 if (index == -1) {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 } else {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 }
                 break;
         }
@@ -193,59 +300,70 @@ public class HealthNewsActivity extends AppCompatActivity {
         //  DULL THE OTHER NEWS SOURCES  //
     }
 
-    /*
-    public void filterChanged(View v){
-        filter = true;
-        boolean reset = false;
-        RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        recyclerAdapter = (HealthRecyclerAdapter) recyclerView.getAdapter();
-        recyclerAdapter.clear();
-        switch (v.getId()) {
-            case R.id.mnt_logo:
-                filterSelectedURLs.clear();
-                filterSelectedURLs.add(healthURL_mnt);
-                v.setAlpha((float) 1.0);
-                break;
-            case R.id.clearFilter_textview:
-                filterSelectedURLs.clear();
-                filterSelectedURLs=allSourceURLs;
-                View view = findViewById(R.id.mnt_logo);
-                view.setAlpha((float)1.0);
-                break;
-        }
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
-    }
-    */
-
     public void refreshFeed(View view) {
-        updateFeedRequested = true;
-        System.out.println("BEFORE TASK::is this refresh request? "+updateFeedRequested);
-        RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
-        if (fetchingNewsLabel.getVisibility()==View.GONE){
-            fetchingNewsLabel.setVisibility(View.VISIBLE);
-        }
-        if(progressBar.getVisibility()==View.GONE)
-            progressBar.setVisibility(View.VISIBLE);
+        if(!checkConnection())
+            showNoInternetSnackBar();
+        else{
+            updateFeedRequested = true;
+            RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
+            ProgressBar progressBar = findViewById(R.id.progressBar);
+            if (fetchingNewsLabel.getVisibility()==View.GONE){
+                fetchingNewsLabel.setVisibility(View.VISIBLE);
+            }
+            if(progressBar.getVisibility()==View.GONE)
+                progressBar.setVisibility(View.VISIBLE);
 
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
+            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+            new fetch(listener).execute(news_source);
+        }
     }
 
     public void  addToBookmarkedArticles(NewsItemObject newsObj){
-        bookmarkedArticles.add(newsObj);
+        SharedPreferences savedArticlesPref = getApplicationContext().getSharedPreferences("All Saved Articles", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = savedArticlesPref.edit();
+        //Fetch already existing saved articles
+        String json_string_saved_articles = savedArticlesPref.getString("Bookmarked",null);
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy_Bitmap_Drawable())
+                .serializeNulls() //<-- uncomment to serialize NULL fields as well
+                .create();
+        Type type = new TypeToken<List<NewsItemObject>>(){}.getType();
+        List<NewsItemObject> savedArticles_Retrieved;
+        if(json_string_saved_articles == null)
+            savedArticles_Retrieved = new ArrayList<NewsItemObject>();
+        else
+            savedArticles_Retrieved = gson.fromJson(json_string_saved_articles, type);
+
+
+        //Add the newly saved article to the already saved articles
+        savedArticles_Retrieved.add(newsObj);
+        gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy_Bitmap_Drawable())
+                .serializeNulls() //<-- uncomment to serialize NULL fields as well
+                .create();
+        json_string_saved_articles = gson.toJson(savedArticles_Retrieved);
+        prefsEditor.putString("Bookmarked",json_string_saved_articles);
+        prefsEditor.commit();
+
     }
 
     public void  removeFromBookmarkedArticles(NewsItemObject newsObj){
         SharedPreferences savedArticlesPref = getApplicationContext().getSharedPreferences("All Saved Articles", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = savedArticlesPref.getString("Health Bookmarked",null);
-        //ArrayList<NewsItemObject> techBookmarked = gson.fromJson(json,NewsItemObject.class);
-        bookmarkedArticles.remove(newsObj);
+        SharedPreferences.Editor prefsEditor = savedArticlesPref.edit();
+        String json_string_saved_articles = savedArticlesPref.getString("Bookmarked",null);
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy_Bitmap_Drawable())
+                .serializeNulls() //<-- uncomment to serialize NULL fields as well
+                .create();
+        Type type = new TypeToken<List<NewsItemObject>>(){}.getType();
+        List<NewsItemObject> savedArticles_Retrieved = gson.fromJson(json_string_saved_articles, type);
+        savedArticles_Retrieved.remove(newsObj);
+        json_string_saved_articles = gson.toJson(savedArticles_Retrieved);
+        prefsEditor.putString("Bookmarked",json_string_saved_articles);
+        prefsEditor.commit();
+
     }
 
     public class fetch extends AsyncTask<String,Integer,ArrayList> {
@@ -372,7 +490,6 @@ public class HealthNewsActivity extends AppCompatActivity {
             filterBySourceLabel.setVisibility(View.VISIBLE);
             hsv.setVisibility(View.VISIBLE);
             newsItemObjectArrayList = result;
-            System.out.println("POST-EXEC:is this refresh request? "+updateFeedRequested);
 
             if(updateFeedRequested){
                 showUpdateFeedSnackBar();
@@ -382,38 +499,37 @@ public class HealthNewsActivity extends AppCompatActivity {
             listener.onTaskComplete(newsItemObjectArrayList,HealthNewsActivity.this);
         }
 
+    }
 
-        private String convertStreamToString(InputStream is) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
+    private String convertStreamToString(InputStream is) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
 
-            String line;
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             try {
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line).append('\n');
-                }
+                is.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
-
-            return sb.toString();
         }
 
-        private void showUpdateFeedSnackBar() {
-            RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
-            Snackbar snackbar = Snackbar.make(root_relative_layout, "FEED UPDATED", Snackbar.LENGTH_SHORT);
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.rgb(244,67,54));
-            snackbar.show();
-        }
+        return sb.toString();
+    }
 
+    private void showUpdateFeedSnackBar() {
+        RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
+        Snackbar snackbar = Snackbar.make(root_relative_layout, "Feed Updated", Snackbar.LENGTH_SHORT);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.rgb(244,67,54));
+        snackbar.show();
     }
 
     public class fetch_completeListener implements AsyncTaskCompleteListener<ArrayList,Activity> {
@@ -460,7 +576,6 @@ public class HealthNewsActivity extends AppCompatActivity {
             holder.textView_Source.setText(newsItemObjects.get(position).getSource());
             imageLoader.DisplayImage(newsItemObjects.get(position).getImgurl(),holder.imageView_articleImage);
             holder.imageView_articleSourceLogo.setImageDrawable(newsItemObjects.get(position).getArticleSourceLogo());
-            //holder.imageView_articleImage.setImageBitmap(newsItemObjects.get(position).getArticleImage());
             String dateString = newsItemObjects.get(position).getArticleDate();
             holder.textView_timeStamp.setText(dateString);
             holder.article_options_layout.setBackgroundColor(newsItemObjects.get(position).getOptionsColor());
@@ -471,7 +586,6 @@ public class HealthNewsActivity extends AppCompatActivity {
                     //Open article for reading
                     String selectedArticleURL  = newsItemObjects.get(position).getUrl();
                     Intent viewArticleIntent = new Intent(HealthNewsActivity.this,ReadArticleActivity.class);
-                    //viewArticleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     viewArticleIntent.putExtra("URL",selectedArticleURL);
                     try{
                         startActivity(viewArticleIntent);
@@ -491,9 +605,7 @@ public class HealthNewsActivity extends AppCompatActivity {
                             newsItemObjects.get(position).getTitle() + "\n\n" +
                             "Shared from News Stand App";
                     mIntent.putExtra(Intent.EXTRA_TEXT, shareString);
-                    //mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Intent i = Intent.createChooser(mIntent, "Share this article");
-                    //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                     holder.swipeRevealLayout.close(true);
                 }
@@ -503,16 +615,17 @@ public class HealthNewsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if(newsItemObjects.get(position).isBookmarked()){
-                        //holder.bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_border_white_48dp);
                         newsItemObjects.get(position).setBookmarked(false);
                         removeFromBookmarkedArticles(newsItemObjects.get(position));
                         Toast.makeText(HealthNewsActivity.this, "Article removed from offline reading", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        //holder.bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_white_48dp);
-                        newsItemObjects.get(position).setBookmarked(true);
-                        addToBookmarkedArticles(newsItemObjects.get(position));
-                        Toast.makeText(HealthNewsActivity.this, "Article saved for offline reading", Toast.LENGTH_SHORT).show();
+                        if(!checkConnection())
+                            showNoInternetSnackBar();
+                        else{
+                            newsItemObjects.get(position).setBookmarked(true);
+                            new SaveArticleTask(holder).execute(newsItemObjects.get(position));
+                        }
                     }
 
                     holder.swipeRevealLayout.close(true);
@@ -552,6 +665,7 @@ public class HealthNewsActivity extends AppCompatActivity {
             protected ImageButton shareImageButton;
             protected ImageButton bookmarkImageButton;
             protected SwipeRevealLayout swipeRevealLayout;
+            protected ProgressBar progressBar;
             public ViewHolder(View itemView) {
                 super(itemView);
                 textView_Headline =  (TextView) itemView.findViewById(R.id.text_view_news_head);
@@ -565,21 +679,66 @@ public class HealthNewsActivity extends AppCompatActivity {
                 shareImageButton = (ImageButton) itemView.findViewById(R.id.share_imagebutton);
                 bookmarkImageButton = (ImageButton) itemView.findViewById(R.id.bookmark_article_imagebutton);
                 swipeRevealLayout = (SwipeRevealLayout)itemView.findViewById(R.id.swipeRevealLayout);
+                progressBar = (ProgressBar)itemView.findViewById(R.id.progressBarNewsItem);
             }
 
             @Override
             public void onClick(View view) {
-                Log.d("RECYCLER-CLICK-EVENTS","Item Clicked at position "+getLayoutPosition());
+
             }
 
             @Override
             public boolean onLongClick(View view) {
-                Log.d("RECYCLER-CLICK-EVENTS","Item Long-Clicked at position "+getLayoutPosition());
                 return true;
             }
         }
 
     }
 
+    public class SaveArticleTask extends AsyncTask<NewsItemObject,Void,String> {
+
+        NewsItemObject object;
+        HealthRecyclerAdapter.ViewHolder holder;
+
+        public SaveArticleTask(HealthRecyclerAdapter.ViewHolder viewHolder){
+            this.holder = viewHolder;
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.holder.progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(NewsItemObject... objects) {
+            String responseString = null;
+            NewsItemObject object = objects[0];
+            this.object = object;
+            try {
+                URL url = new URL(object.getUrl());
+                responseString = null;
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                responseString = convertStreamToString(in);
+                urlConnection.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return responseString;
+        }
+
+        @Override
+        protected void onPostExecute(String responseString) {
+            super.onPostExecute(responseString);
+            object.setArticleContent(responseString);
+            addToBookmarkedArticles(object);
+            this.holder.progressBar.setVisibility(View.GONE);
+            Toast.makeText(HealthNewsActivity.this, "Article saved for offline reading", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 }
