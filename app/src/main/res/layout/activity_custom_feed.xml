@@ -99,14 +99,36 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
+                android:id="@+id/parent_relative_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:id="@+id/noInternetLayout"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textSize="24sp"
+                        android:typeface="monospace"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textAlignment="center"
+                        android:layout_width="match_parent"
+                        android:id="@+id/noInternetLayout_Textview"
+                        android:text="No Internet Connection"
+                        android:textColor="#212121"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
                 <TextView
                     android:padding="8dp"
                     android:background="#212121"
                     android:gravity="center"
-                    android:layout_below="@id/filter_scrollview"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     android:fontFamily="sans-serif-condensed"
@@ -120,9 +142,7 @@
                 <ProgressBar
                     android:background="#212121"
                     android:id="@+id/progressBar"
-                    android:indeterminate="false"
-                    android:max="100"
-                    android:progress="10"
+                    android:indeterminate="true"
                     android:theme="@style/CustomNews_LinearProgress"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
@@ -130,10 +150,50 @@
                     android:layout_below="@id/fetching_news_label" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:visibility="visible"
                     android:id="@+id/news_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/progressBar"/>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/noFeedYet_layout"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/noFeedYet_textview"
+                        android:fontFamily="sans-serif-condensed"
+                        android:typeface="monospace"
+                        android:layout_marginTop="32dp"
+                        android:padding="8dp"
+                        android:text="Your feed has not been configured yet"
+                        android:textAlignment="center"
+                        android:textSize="26sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:onClick="showPreferenceScreen"
+                        android:id="@+id/configureFeed_button"
+                        android:layout_marginTop="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="Configure"
+                        android:textSize="16sp"
+                        android:typeface="monospace"
+                        android:fontFamily="sans-serif-condensed"
+                        android:background="#E91E63"
+                        android:textColor="@android:color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
             </RelativeLayout>
 
