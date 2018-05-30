@@ -1,373 +1,390 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#212121"
-    tools:context="pratik.com.newsstand.Library">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:id="@+id/linearLayout_parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:paddingBottom="8dp"
-        android:paddingEnd="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingStart="8dp">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#212121"
+        tools:context="pratik.com.newsstand.Library">
 
         <LinearLayout
-            android:id="@+id/linearLayout_group1"
+            android:id="@+id/linearLayout_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="8dp"
+            android:paddingEnd="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingStart="8dp">
 
-            <RelativeLayout
-                android:id="@+id/rl_tech"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/linearLayout_group1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_tech"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_tech_library"
-                    android:onClick="showTechNews"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_lightbulb_outline_white_48dp"
-                    android:transitionName="libraryToTech" />
-
-                <TextView
-                    android:id="@+id/tv_tech"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rl_tech"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_tech"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Technology"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
+                    android:layout_weight="1">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/iv_tech"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ripple_tech_library"
+                        android:onClick="showTechNews"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_lightbulb_outline_white_48dp"
+                        android:transitionName="libraryToTech" />
 
-            <RelativeLayout
-                android:id="@+id/rl_sports"
-                android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tv_tech"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_tech"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:textAlignment="center"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Technology"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_sports"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_sports"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ripple_sports_library"
+                        android:onClick="showSportsNews"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/sports"
+                        android:transitionName="libraryToSport" />
+
+                    <TextView
+                        android:id="@+id/tv_sports"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_sports"
+                        android:textAlignment="center"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:text="Sports"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_business"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_business"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ripple_business_library"
+                        android:scaleType="centerInside"
+                        android:onClick="showBusinessNews"
+                        android:src="@drawable/ic_business_center_white_48dp"
+                        android:transitionName="libraryToBusiness"/>
+
+                    <TextView
+                        android:id="@+id/tv_business"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_business"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:text="Business"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_group2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_sports"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_sports_library"
-                    android:onClick="showSportsNews"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/sports"
-                    android:transitionName="libraryToSport" />
 
-                <TextView
-                    android:id="@+id/tv_sports"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rl_politics"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_sports"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:text="Sports"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
+                    android:layout_weight="1">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/iv_health"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ripple_health_library"
+                        android:onClick="showHealthNews"
+                        android:transitionName="libraryToHealth"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/health" />
 
-            <RelativeLayout
-                android:id="@+id/rl_business"
-                android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tv_health"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_health"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:ellipsize="marquee"
+                        android:text="Health"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_general"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_general"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:onClick="showGeneralNews"
+                        android:transitionName="libraryToGeneral"
+                        android:background="@drawable/ripple_general_library"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/general" />
+
+                    <TextView
+                        android:id="@+id/tv_general"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_general"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:ellipsize="marquee"
+                        android:text="General"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_entertainment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_entertainment"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:onClick="showEntertainmentNews"
+                        android:transitionName="libraryToEntertainment"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ripple_entertainment_library"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/entertainment" />
+
+                    <TextView
+                        android:id="@+id/tv_entertainment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_entertainment"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:ellipsize="marquee"
+                        android:text="Entertainment"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout_group3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="1">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_business"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_business_library"
-                    android:scaleType="centerInside"
-                    android:onClick="showBusinessNews"
-                    android:src="@drawable/ic_business_center_white_48dp"
-                    android:transitionName="libraryToBusiness"/>
-
-                <TextView
-                    android:id="@+id/tv_business"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rl_science"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_business"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:text="Business"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
+                    android:layout_weight="1">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/iv_science"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:onClick="showScienceNews"
+                        android:transitionName="libraryToScience"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ripple_science_library"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/science" />
 
+                    <TextView
+                        android:id="@+id/tv_science"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_science"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Science"
+                        android:textAlignment="center"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_bookmarked"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_bookmarked"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:transitionName="libraryToOffline"
+                        android:background="@drawable/ripple_offline_library"
+                        android:onClick="showOfflineArticles"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_file_download_white_48dp" />
+
+                    <TextView
+                        android:id="@+id/tv_offline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_bookmarked"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:ellipsize="marquee"
+                        android:text="Offline Articles"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_custom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_custom"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ripple_custom_library"
+                        android:onClick="showCustomFeed"
+                        android:transitionName="libraryToCustom"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/for_you" />
+
+                    <TextView
+                        android:id="@+id/tv_custom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_custom"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:ellipsize="marquee"
+                        android:text="For You"
+                        android:textColor="#E0E0E0"
+                        android:textSize="18sp"
+                        android:typeface="monospace" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout_group2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+
+    </RelativeLayout>
+
+</ScrollView>
 
 
-            <RelativeLayout
-                android:id="@+id/rl_politics"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/iv_health"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_health_library"
-                    android:onClick="showHealthNews"
-                    android:transitionName="libraryToHealth"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/health" />
-
-                <TextView
-                    android:id="@+id/tv_health"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_health"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:text="Health"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_general"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/iv_general"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:onClick="showGeneralNews"
-                    android:transitionName="libraryToGeneral"
-                    android:background="@drawable/ripple_general_library"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/general" />
-
-                <TextView
-                    android:id="@+id/tv_general"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_general"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:text="General"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_entertainment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/iv_entertainment"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:onClick="showEntertainmentNews"
-                    android:transitionName="libraryToEntertainment"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_entertainment_library"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/entertainment" />
-
-                <TextView
-                    android:id="@+id/tv_entertainment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_entertainment"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:text="Entertainment"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout_group3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/rl_science"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/iv_science"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:onClick="showScienceNews"
-                    android:transitionName="libraryToScience"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_science_library"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/science" />
-
-                <TextView
-                    android:id="@+id/tv_science"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_science"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Science"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_bookmarked"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/iv_bookmarked"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:transitionName="libraryToOffline"
-                    android:background="@drawable/ripple_offline_library"
-                    android:onClick="showOfflineArticles"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_file_download_white_48dp" />
-
-                <TextView
-                    android:id="@+id/tv_offline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_bookmarked"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:text="Offline Articles"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_custom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/iv_custom"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_custom_library"
-                    android:onClick="showCustomFeed"
-                    android:transitionName="libraryToCustom"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/for_you" />
-
-                <TextView
-                    android:id="@+id/tv_custom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_custom"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:text="For You"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp"
-                    android:typeface="monospace" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-</RelativeLayout>
