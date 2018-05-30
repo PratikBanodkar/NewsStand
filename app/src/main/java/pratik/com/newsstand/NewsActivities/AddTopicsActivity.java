@@ -237,7 +237,7 @@ public class AddTopicsActivity extends AppCompatActivity {
                 ars_technica.setChecked(true);
                 continue;
             }
-            if (s.equals("Crypto Coin News")) {
+            if (s.equals("Crypto Coins News")) {
                 crypto_coin.setChecked(true);
                 continue;
             }
@@ -456,7 +456,7 @@ public class AddTopicsActivity extends AppCompatActivity {
     //METHODS TO GET WHICH CHECKBOX HAS BEEN CHECKED
     public void getTechSources(){
         if(ars_technica.isChecked()) {techSources.add(new Pair<>("ars-technica", "Ars Technica"));}
-        if(crypto_coin.isChecked()) {techSources.add(new Pair<>("crypto-coin-news", "Crypto Coin News"));}
+        if(crypto_coin.isChecked()) {techSources.add(new Pair<>("crypto-coins-news", "Crypto Coins News"));}
         if(engadget.isChecked()) {techSources.add(new Pair<>("engadget","Engadget"));}
         if(hacker_news.isChecked()) {techSources.add(new Pair<>("hacker-news","Hacker News"));}
         if(recode.isChecked()) {techSources.add(new Pair<>("recode","Recode"));}
@@ -471,22 +471,22 @@ public class AddTopicsActivity extends AppCompatActivity {
         if(bbc_sport.isChecked()) {sportsSources.add(new Pair<>("bbc-sport","BBC Sport"));}
         if(bleacher_report.isChecked()) {sportsSources.add(new Pair<>("bleacher-report","Bleacher Report"));}
         if(espn.isChecked()) {sportsSources.add(new Pair<>("espn","ESPN"));}
-        if(espn_cricinfo.isChecked()) {sportsSources.add(new Pair<>("espn-cricinfo","ESPN Cricinfo"));}
+        if(espn_cricinfo.isChecked()) {sportsSources.add(new Pair<>("espn-cric-info","ESPN Cric Info"));}
         if(football_italia.isChecked()) {sportsSources.add(new Pair<>("football-italia","Football Italia"));}
         if(four_four_two.isChecked()) {sportsSources.add(new Pair<>("four-four-two","Four Four Two"));}
         if(fox_sports.isChecked()) {sportsSources.add(new Pair<>("fox-sports","Fox Sports"));}
-        if(nfl.isChecked()) {sportsSources.add(new Pair<>("nfl","NFL"));}
-        if(nhl.isChecked()) {sportsSources.add(new Pair<>("nhl","NHL"));}
+        if(nfl.isChecked()) {sportsSources.add(new Pair<>("nfl-news","NFL News"));}
+        if(nhl.isChecked()) {sportsSources.add(new Pair<>("nhl-news","NHL News"));}
         if(talksport.isChecked()) {sportsSources.add(new Pair<>("talksport","Talksport"));}
         if(the_sport_bible.isChecked()) {sportsSources.add(new Pair<>("the-sport-bible","The Sport Bible"));}
     }
 
     public void getBusinessSources(){
-        if(afr.isChecked()) {businessSources.add(new Pair<>("afr","AFR"));}
+        if(afr.isChecked()) {businessSources.add(new Pair<>("australian-financial-review","Australian Financial Review"));}
         if(bloomberg.isChecked()) {businessSources.add(new Pair<>("bloomberg","Bloomberg"));}
         if(business_insider.isChecked()) {businessSources.add(new Pair<>("business-insider","Business Insider"));}
         if(cnbc.isChecked()) {businessSources.add(new Pair<>("cnbc","CNBC"));}
-        if(economist.isChecked()) {businessSources.add(new Pair<>("economist","Economist"));}
+        if(economist.isChecked()) {businessSources.add(new Pair<>("the-economist","The Economist"));}
         if(financial_post.isChecked()) {businessSources.add(new Pair<>("financial-post","Financial Post"));}
         if(financial_times.isChecked()) {businessSources.add(new Pair<>("financial-times","Financial Times"));}
         if(fortune.isChecked()) {businessSources.add(new Pair<>("fortune","Fortune"));}
@@ -567,7 +567,7 @@ public class AddTopicsActivity extends AppCompatActivity {
         feedmap.put("Science", scienceSources);
         String hashmap_to_string = gson.toJson(feedmap);
         intent.putExtra("Feed Map",hashmap_to_string);
-        setResult(RESULT_OK,intent);
+        setResult(5003,intent);
         finish();
     }
 }
