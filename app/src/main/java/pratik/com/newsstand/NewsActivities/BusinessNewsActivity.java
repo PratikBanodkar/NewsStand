@@ -66,6 +66,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import pratik.com.newsstand.Connectivity.ConnectivityReceiver;
+import pratik.com.newsstand.Connectivity.MyApplication;
 import pratik.com.newsstand.ExclusionStrategy_Bitmap_Drawable;
 import pratik.com.newsstand.NewsFetching.ArticleImageFetching.ImageLoader;
 import pratik.com.newsstand.NewsFetching.AsyncTaskCompleteListener;
@@ -73,7 +75,7 @@ import pratik.com.newsstand.NewsFetching.NewsItemObject;
 import pratik.com.newsstand.PermissionUtils;
 import pratik.com.newsstand.R;
 
-public class BusinessNewsActivity extends AppCompatActivity {
+public class BusinessNewsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     private boolean updateFeedRequested = false;
     private RecyclerView recyclerView;
@@ -86,6 +88,20 @@ public class BusinessNewsActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 1000;
     SharedPreferences savedArticlesPref;
     private ArrayList<String> bookmarkedArticles_String;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        MyApplication.getInstance().removeConnectivityListener();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,13 +128,91 @@ public class BusinessNewsActivity extends AppCompatActivity {
         }
         else
         {
-            fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
-
     }
+
+    public void doOnNoInternet(){
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        recyclerView.setVisibility(View.GONE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        pBar.setVisibility(View.GONE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        fNL.setVisibility(View.GONE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        fSV.setVisibility(View.GONE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        fBV.setVisibility(View.GONE);
+
+        LinearLayout noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+
+    private boolean checkConnection() {
+        //boolean isConnected = ConnectivityReceiver.isConnected();
+        //showSnack(isConnected);
+        return ConnectivityReceiver.isConnected();
+    }
+
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            fetchNews();
+        } else {
+            message = "No internet connection";
+            color = Color.rgb(63,81,181);
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
+
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(color);
+            snackbar.show();
+        }
+    }
+
+    private void showNoInternetSnackBar(){
+        String message;
+        int color;
+        message = "No internet connection";
+        color = Color.rgb(63,81,181);
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
 
     public void fetchNews(){
         fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        if(recyclerView.getVisibility() == View.GONE)
+            recyclerView.setVisibility(View.VISIBLE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        if(pBar.getVisibility() == View.GONE)
+            pBar.setVisibility(View.VISIBLE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        if(fNL.getVisibility() == View.GONE)
+            fNL.setVisibility(View.VISIBLE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        if(fSV.getVisibility() == View.GONE)
+            fSV.setVisibility(View.VISIBLE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        if(fBV.getVisibility() == View.GONE)
+            fBV.setVisibility(View.VISIBLE);
         new fetch(listener).execute(news_source);
     }
 
@@ -136,7 +230,11 @@ public class BusinessNewsActivity extends AppCompatActivity {
                 requestPermission();
             }
         } else {
-            fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
     }
 
@@ -160,9 +258,17 @@ public class BusinessNewsActivity extends AppCompatActivity {
             case REQUEST_CODE:
                 int index = PermissionUtils.verifyPermissions(grantResults);
                 if (index == -1) {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 } else {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 }
                 break;
         }
@@ -203,11 +309,14 @@ public class BusinessNewsActivity extends AppCompatActivity {
     }
 
     public void filterChanged(View v){
-        filter = true;
-        recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        recyclerAdapter = (BusinessRecyclerAdapter) recyclerView.getAdapter();
-        recyclerAdapter.clear();
-        switch (v.getId()){
+        if(!checkConnection())
+            showNoInternetSnackBar();
+        else {
+            filter = true;
+            recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            recyclerAdapter = (BusinessRecyclerAdapter) recyclerView.getAdapter();
+            recyclerAdapter.clear();
+            switch (v.getId()){
                 case R.id.afr_logo:
                     news_source = getResources().getString(R.string.afr_url);
                     View view = findViewById(R.id.bloomberg_logo);      view.setAlpha((float)0.2);
@@ -317,25 +426,30 @@ public class BusinessNewsActivity extends AppCompatActivity {
                     v.setAlpha((float)1.0);
                     break;
             }
-
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
+            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+            new fetch(listener).execute(news_source);
+        }
     }
 
     public void refreshFeed(View view) {
-        updateFeedRequested = true;
-        //System.out.println("BEFORE TASK::is this refresh request? "+updateFeedRequested);
-        recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
-        if (fetchingNewsLabel.getVisibility()==View.GONE){
-            fetchingNewsLabel.setVisibility(View.VISIBLE);
-        }
-        if(progressBar.getVisibility()==View.GONE)
-            progressBar.setVisibility(View.VISIBLE);
+        if(!checkConnection())
+            showNoInternetSnackBar();
+        else{
+            updateFeedRequested = true;
+            //System.out.println("BEFORE TASK::is this refresh request? "+updateFeedRequested);
+            recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
+            ProgressBar progressBar = findViewById(R.id.progressBar);
+            if (fetchingNewsLabel.getVisibility()==View.GONE){
+                fetchingNewsLabel.setVisibility(View.VISIBLE);
+            }
+            if(progressBar.getVisibility()==View.GONE)
+                progressBar.setVisibility(View.VISIBLE);
 
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
+            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+            new fetch(listener).execute(news_source);
+        }
+
     }
 
     public void  addToBookmarkedArticles(NewsItemObject newsObj){
@@ -438,9 +552,7 @@ public class BusinessNewsActivity extends AppCompatActivity {
                             newsItemObjects.get(position).getTitle() + "\n\n" +
                             "Shared from News Stand App";
                     mIntent.putExtra(Intent.EXTRA_TEXT, shareString);
-                    //mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Intent i = Intent.createChooser(mIntent, "Share this article");
-                    //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                     holder.swipeRevealLayout.close(true);
                 }
@@ -455,10 +567,13 @@ public class BusinessNewsActivity extends AppCompatActivity {
                         Toast.makeText(BusinessNewsActivity.this, "Article removed from offline reading", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        newsItemObjects.get(position).setBookmarked(true);
-                        new SaveArticleTask(holder).execute(newsItemObjects.get(position));
+                        if(!checkConnection())
+                            showNoInternetSnackBar();
+                        else{
+                            newsItemObjects.get(position).setBookmarked(true);
+                            new SaveArticleTask(holder).execute(newsItemObjects.get(position));
+                        }
                     }
-
                     holder.swipeRevealLayout.close(true);
                 }
             });
@@ -528,7 +643,6 @@ public class BusinessNewsActivity extends AppCompatActivity {
     }
 
     public class fetch extends AsyncTask<String,Void,ArrayList> {
-
         private ArrayList<NewsItemObject> newsItemObjectArrayList;
         private fetch_completeListener listener;
         private ProgressBar progressBar;
@@ -685,7 +799,7 @@ public class BusinessNewsActivity extends AppCompatActivity {
 
     private void showUpdateFeedSnackBar() {
         RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
-        Snackbar snackbar = Snackbar.make(root_relative_layout, "FEED UPDATED", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(root_relative_layout, "Feed Updated", Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.rgb(63,81,181));
