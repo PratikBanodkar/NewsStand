@@ -63,63 +63,29 @@
             android:id="@+id/parent_relative_layout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/news_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/noArticlesYet_textview"
+                    android:fontFamily="sans-serif-condensed"
+                    android:typeface="monospace"
+                    android:padding="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="No Offline Articles"
+                    android:textAlignment="center"
+                    android:textSize="26sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
 
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
 </RelativeLayout>
-
-
-
-
-
-
-    <!--
-    <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="pratik.com.newsstand.NewsActivities.OfflineArticlesActivity">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.Toolbar>
-
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:onClick="savePage"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <Button
-            android:id="@+id/viewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="viewPage"
-            android:text="View"
-            tools:layout_editor_absoluteX="282dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <WebView
-            android:id="@+id/webview_offline"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-    -->
