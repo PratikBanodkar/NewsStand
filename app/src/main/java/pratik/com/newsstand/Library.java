@@ -36,7 +36,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-public class Library extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
+public class Library extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private CustomViewPager viewPager;
@@ -78,45 +78,8 @@ public class Library extends AppCompatActivity implements ConnectivityReceiver.C
         tv_articles.setText("Articles");
         tabLayout.getTabAt(1).setCustomView(tv_articles);
 
-        checkConnection();
-
-
-
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // register connection status listener
-        MyApplication.getInstance().setConnectivityListener(this);
-    }
-
-    /**
-     * Callback will be triggered when there is change in
-     * network connection
-     */
-    @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
-        showStatus(isConnected);
-    }
-
-    private void checkConnection() {
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        showStatus(isConnected);
-    }
-
-    private void showStatus(boolean isConnected) {
-        String message;
-        int color;
-        if (isConnected) {
-            internetStatusTextview.setVisibility(View.GONE);
-        }
-        else {
-            internetStatusTextview.setVisibility(View.VISIBLE);
-            internetStatusTextview.setText("No Internet");
-        }
-    }
 
     public void showTechNews(View view) {
         ImageView iv_tech = findViewById(R.id.iv_tech);
