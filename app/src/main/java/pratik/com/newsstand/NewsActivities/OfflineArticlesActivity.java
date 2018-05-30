@@ -77,9 +77,18 @@ public class OfflineArticlesActivity extends AppCompatActivity {
                 .create();
         Type type = new TypeToken<List<NewsItemObject>>(){}.getType();
         List<NewsItemObject> savedArticles_Retrieved = gson.fromJson(json_string_saved_articles, type);
-
-        RecyclerView.Adapter adapter = new OfflineRecyclerAdapter((ArrayList<NewsItemObject>) savedArticles_Retrieved);
-        recyclerView.setAdapter(adapter);
+        if(savedArticles_Retrieved == null || savedArticles_Retrieved.size() == 0){
+            recyclerView.setVisibility(View.GONE);
+            TextView noArticlesTextview = findViewById(R.id.noArticlesYet_textview);
+            noArticlesTextview.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            TextView noArticlesTextview = findViewById(R.id.noArticlesYet_textview);
+            noArticlesTextview.setVisibility(View.GONE);
+            RecyclerView.Adapter adapter = new OfflineRecyclerAdapter((ArrayList<NewsItemObject>) savedArticles_Retrieved);
+            recyclerView.setAdapter(adapter);
+        }
 
     }
 
