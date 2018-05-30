@@ -41,15 +41,19 @@ import android.widget.Toast;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
@@ -59,15 +63,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
+import pratik.com.newsstand.Connectivity.ConnectivityReceiver;
+import pratik.com.newsstand.ExclusionStrategy_Bitmap_Drawable;
 import pratik.com.newsstand.NewsFetching.ArticleImageFetching.ImageLoader;
 import pratik.com.newsstand.NewsFetching.AsyncTaskCompleteListener;
 import pratik.com.newsstand.NewsFetching.NewsItemObject;
 import pratik.com.newsstand.PermissionUtils;
 import pratik.com.newsstand.R;
 
-public class EntertainmentNewsActivity extends AppCompatActivity {
+public class EntertainmentNewsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
 
     private boolean updateFeedRequested = false;
     private RecyclerView recyclerView;
@@ -94,7 +101,6 @@ public class EntertainmentNewsActivity extends AppCompatActivity {
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
 
         final RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
-        //ViewCompat.setNestedScrollingEnabled(recyclerView,false);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         permissions[0] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -105,15 +111,90 @@ public class EntertainmentNewsActivity extends AppCompatActivity {
         }
         else
         {
-            fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
-        /*fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);*/
+    }
 
+    public void doOnNoInternet(){
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        recyclerView.setVisibility(View.GONE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        pBar.setVisibility(View.GONE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        fNL.setVisibility(View.GONE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        fSV.setVisibility(View.GONE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        fBV.setVisibility(View.GONE);
+
+        LinearLayout noInternetLayout = findViewById(R.id.noInternetLayout);
+        noInternetLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+
+    private boolean checkConnection() {
+        //boolean isConnected = ConnectivityReceiver.isConnected();
+        //showSnack(isConnected);
+        return ConnectivityReceiver.isConnected();
+    }
+
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            fetchNews();
+        } else {
+            message = "No internet connection";
+            color = Color.rgb(255, 193, 7);
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
+
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(color);
+            snackbar.show();
+        }
+    }
+
+    private void showNoInternetSnackBar(){
+        String message;
+        int color;
+        message = "No internet connection";
+        color = Color.rgb(255, 193, 7);
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
     }
 
     public void fetchNews(){
         fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+        RecyclerView recyclerView = findViewById(R.id.news_recycler_view);
+        if(recyclerView.getVisibility() == View.GONE)
+            recyclerView.setVisibility(View.VISIBLE);
+        ProgressBar pBar = findViewById(R.id.progressBar);
+        if(pBar.getVisibility() == View.GONE)
+            pBar.setVisibility(View.VISIBLE);
+        TextView fNL = findViewById(R.id.fetching_news_label);
+        if(fNL.getVisibility() == View.GONE)
+            fNL.setVisibility(View.VISIBLE);
+        HorizontalScrollView fSV = findViewById(R.id.filter_scrollview);
+        if(fSV.getVisibility() == View.GONE)
+            fSV.setVisibility(View.VISIBLE);
+        TextView fBV = findViewById(R.id.filterByValue_textview);
+        if(fBV.getVisibility() == View.GONE)
+            fBV.setVisibility(View.VISIBLE);
         new fetch(listener).execute(news_source);
     }
 
@@ -131,7 +212,11 @@ public class EntertainmentNewsActivity extends AppCompatActivity {
                 requestPermission();
             }
         } else {
-            fetchNews();
+            if (checkConnection())
+                fetchNews();
+            else {
+                doOnNoInternet();
+            }
         }
     }
 
@@ -155,9 +240,17 @@ public class EntertainmentNewsActivity extends AppCompatActivity {
             case REQUEST_CODE:
                 int index = PermissionUtils.verifyPermissions(grantResults);
                 if (index == -1) {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 } else {
-                    fetchNews();
+                    if (checkConnection())
+                        fetchNews();
+                    else {
+                        doOnNoInternet();
+                    }
                 }
                 break;
         }
@@ -198,152 +291,343 @@ public class EntertainmentNewsActivity extends AppCompatActivity {
     }
 
     public void filterChanged(View v){
-        filter = true;
-        recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        recyclerAdapter = (EntertainmentRecyclerAdapter) recyclerView.getAdapter();
-        recyclerAdapter.clear();
-        switch (v.getId()) {
-            case R.id.buzzfeed_logo:
-                news_source = getResources().getString(R.string.buzzfeed_url);
-                View view = findViewById(R.id.daily_mail_logo);      view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.daily_mail_logo:
-                news_source = getResources().getString(R.string.daily_mail_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.entertainment_weekly_logo:
-                news_source = getResources().getString(R.string.entertainment_weekly_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.ign_logo:
-                news_source = getResources().getString(R.string.ign_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.mashable_logo:
-                news_source = getResources().getString(R.string.mashable_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.mtv_news_logo:
-                news_source = getResources().getString(R.string.mtv_news_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.mtv_news_uk_logo:
-                news_source = getResources().getString(R.string.mtv_news_uk_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.polygon_logo:
-                news_source = getResources().getString(R.string.polygon_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-            case R.id.the_lad_bible_logo:
-                news_source = getResources().getString(R.string.the_lad_bible_url);
-                view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
-                view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
-                view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
-                view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
-                view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
-                view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
-                v.setAlpha((float)1.0);
-                break;
-        }
+        if(!checkConnection())
+            showNoInternetSnackBar();
+        else{
+            filter = true;
+            recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            recyclerAdapter = (EntertainmentRecyclerAdapter) recyclerView.getAdapter();
+            recyclerAdapter.clear();
+            switch (v.getId()) {
+                case R.id.buzzfeed_logo:
+                    news_source = getResources().getString(R.string.buzzfeed_url);
+                    View view = findViewById(R.id.daily_mail_logo);      view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.daily_mail_logo:
+                    news_source = getResources().getString(R.string.daily_mail_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.entertainment_weekly_logo:
+                    news_source = getResources().getString(R.string.entertainment_weekly_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.ign_logo:
+                    news_source = getResources().getString(R.string.ign_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.mashable_logo:
+                    news_source = getResources().getString(R.string.mashable_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.mtv_news_logo:
+                    news_source = getResources().getString(R.string.mtv_news_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.mtv_news_uk_logo:
+                    news_source = getResources().getString(R.string.mtv_news_uk_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.polygon_logo:
+                    news_source = getResources().getString(R.string.polygon_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.the_lad_bible_logo);        view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+                case R.id.the_lad_bible_logo:
+                    news_source = getResources().getString(R.string.the_lad_bible_url);
+                    view = findViewById(R.id.buzzfeed_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.daily_mail_logo);           view.setAlpha((float)0.2);
+                    view = findViewById(R.id.entertainment_weekly_logo); view.setAlpha((float)0.2);
+                    view = findViewById(R.id.ign_logo);                  view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mashable_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_logo);             view.setAlpha((float)0.2);
+                    view = findViewById(R.id.mtv_news_uk_logo);          view.setAlpha((float)0.2);
+                    view = findViewById(R.id.polygon_logo);              view.setAlpha((float)0.2);
+                    v.setAlpha((float)1.0);
+                    break;
+            }
 
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
+            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+            new fetch(listener).execute(news_source);
+        }
     }
 
     public void refreshFeed(View view) {
-        updateFeedRequested = true;
-        System.out.println("BEFORE TASK::is this refresh request? "+updateFeedRequested);
-        RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-        TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
-        if (fetchingNewsLabel.getVisibility()==View.GONE){
-            fetchingNewsLabel.setVisibility(View.VISIBLE);
-        }
-        if(progressBar.getVisibility()==View.GONE)
-            progressBar.setVisibility(View.VISIBLE);
+        if(!checkConnection())
+            showNoInternetSnackBar();
+        else{
+            updateFeedRequested = true;
+            RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
+            recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
+            ProgressBar progressBar = findViewById(R.id.progressBar);
+            if (fetchingNewsLabel.getVisibility()==View.GONE){
+                fetchingNewsLabel.setVisibility(View.VISIBLE);
+            }
+            if(progressBar.getVisibility()==View.GONE)
+                progressBar.setVisibility(View.VISIBLE);
 
-        fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-        new fetch(listener).execute(news_source);
+            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+            new fetch(listener).execute(news_source);
+        }
     }
 
     public void  addToBookmarkedArticles(NewsItemObject newsObj){
-        bookmarkedArticles.add(newsObj);
+        SharedPreferences savedArticlesPref = getApplicationContext().getSharedPreferences("All Saved Articles", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = savedArticlesPref.edit();
+        //Fetch already existing saved articles
+        String json_string_saved_articles = savedArticlesPref.getString("Bookmarked",null);
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy_Bitmap_Drawable())
+                .serializeNulls() //<-- uncomment to serialize NULL fields as well
+                .create();
+        Type type = new TypeToken<List<NewsItemObject>>(){}.getType();
+        List<NewsItemObject> savedArticles_Retrieved;
+        if(json_string_saved_articles == null)
+            savedArticles_Retrieved = new ArrayList<NewsItemObject>();
+        else
+            savedArticles_Retrieved = gson.fromJson(json_string_saved_articles, type);
+
+
+        //Add the newly saved article to the already saved articles
+        savedArticles_Retrieved.add(newsObj);
+        gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy_Bitmap_Drawable())
+                .serializeNulls() //<-- uncomment to serialize NULL fields as well
+                .create();
+        json_string_saved_articles = gson.toJson(savedArticles_Retrieved);
+        prefsEditor.putString("Bookmarked",json_string_saved_articles);
+        prefsEditor.commit();
+
     }
 
     public void  removeFromBookmarkedArticles(NewsItemObject newsObj){
         SharedPreferences savedArticlesPref = getApplicationContext().getSharedPreferences("All Saved Articles", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = savedArticlesPref.getString("Entertainment Bookmarked",null);
-        //ArrayList<NewsItemObject> techBookmarked = gson.fromJson(json,NewsItemObject.class);
-        bookmarkedArticles.remove(newsObj);
+        SharedPreferences.Editor prefsEditor = savedArticlesPref.edit();
+        String json_string_saved_articles = savedArticlesPref.getString("Bookmarked",null);
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy_Bitmap_Drawable())
+                .serializeNulls() //<-- uncomment to serialize NULL fields as well
+                .create();
+        Type type = new TypeToken<List<NewsItemObject>>(){}.getType();
+        List<NewsItemObject> savedArticles_Retrieved = gson.fromJson(json_string_saved_articles, type);
+        savedArticles_Retrieved.remove(newsObj);
+        json_string_saved_articles = gson.toJson(savedArticles_Retrieved);
+        prefsEditor.putString("Bookmarked",json_string_saved_articles);
+        prefsEditor.commit();
+
+    }
+
+
+    public class EntertainmentRecyclerAdapter extends RecyclerView.Adapter<EntertainmentRecyclerAdapter.ViewHolder> {
+        private ArrayList<NewsItemObject> newsItemObjects;
+        ImageLoader imageLoader = new ImageLoader(EntertainmentNewsActivity.this);
+        private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+
+        public EntertainmentRecyclerAdapter(ArrayList<NewsItemObject> newsItems){
+            this.newsItemObjects = newsItems;
+        }
+
+        @Override
+        public EntertainmentRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_short, parent, false);
+            ViewHolder viewHolder = new ViewHolder(view);
+            return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(final EntertainmentRecyclerAdapter.ViewHolder holder, final int position) {
+            viewBinderHelper.bind(holder.swipeRevealLayout, newsItemObjects.get(position).getId());
+            holder.textView_Headline.setText(newsItemObjects.get(position).getTitle());
+            holder.textView_Description.setText(newsItemObjects.get(position).getDescription());
+            holder.textView_Source.setText(newsItemObjects.get(position).getSource());
+            imageLoader.DisplayImage(newsItemObjects.get(position).getImgurl(),holder.imageView_articleImage);
+            holder.imageView_articleSourceLogo.setImageDrawable(newsItemObjects.get(position).getArticleSourceLogo());
+            //holder.imageView_articleImage.setImageBitmap(newsItemObjects.get(position).getArticleImage());
+            String dateString = newsItemObjects.get(position).getArticleDate();
+            holder.textView_timeStamp.setText(dateString);
+            holder.article_options_layout.setBackgroundColor(newsItemObjects.get(position).getOptionsColor());
+
+            holder.article_contents_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Open article for reading
+                    String selectedArticleURL  = newsItemObjects.get(position).getUrl();
+                    Intent viewArticleIntent = new Intent(EntertainmentNewsActivity.this,ReadArticleActivity.class);
+                    //viewArticleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                    viewArticleIntent.putExtra("URL",selectedArticleURL);
+                    try{
+                        startActivity(viewArticleIntent);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            holder.shareImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent mIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    mIntent.setType("text/plain");
+                    String shareString = newsItemObjects.get(position).getUrl() + "\n\n" +
+                            newsItemObjects.get(position).getTitle() + "\n\n" +
+                            "Shared from News Stand App";
+                    mIntent.putExtra(Intent.EXTRA_TEXT, shareString);
+                    //mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent i = Intent.createChooser(mIntent, "Share this article");
+                    //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                    holder.swipeRevealLayout.close(true);
+                }
+            });
+
+            holder.bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(newsItemObjects.get(position).isBookmarked()){
+                        //holder.bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_border_white_48dp);
+                        newsItemObjects.get(position).setBookmarked(false);
+                        removeFromBookmarkedArticles(newsItemObjects.get(position));
+                        Toast.makeText(EntertainmentNewsActivity.this, "Article removed from offline reading", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        if(!checkConnection())
+                            showNoInternetSnackBar();
+                        else{
+                            newsItemObjects.get(position).setBookmarked(true);
+                            new SaveArticleTask(holder).execute(newsItemObjects.get(position));
+                        }
+                    }
+
+                    holder.swipeRevealLayout.close(true);
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return newsItemObjects.size();
+        }
+
+        public ArrayList getNewsItemObjects(){
+            return this.newsItemObjects;
+        }
+
+        public void setNewsItemObjects(ArrayList newsItemObjects){
+            this.newsItemObjects = newsItemObjects;
+        }
+
+        public void clear() {
+            int size = this.newsItemObjects.size();
+            this.newsItemObjects.clear();
+            notifyItemRangeRemoved(0, size);
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
+            protected TextView textView_Headline;
+            protected TextView textView_Description;
+            protected TextView textView_Source;
+            protected ImageView imageView_articleImage;
+            protected TextView textView_timeStamp;
+            protected ImageView imageView_articleSourceLogo;
+            protected LinearLayout article_options_layout;
+            protected LinearLayout article_contents_layout;
+            protected ImageButton shareImageButton;
+            protected ImageButton bookmarkImageButton;
+            protected SwipeRevealLayout swipeRevealLayout;
+            protected ProgressBar progressBar;
+            public ViewHolder(View itemView) {
+                super(itemView);
+                textView_Headline =  (TextView) itemView.findViewById(R.id.text_view_news_head);
+                textView_Description =  (TextView) itemView.findViewById(R.id.text_view_news_desc);
+                textView_Source =  (TextView) itemView.findViewById(R.id.text_view_news_source);
+                imageView_articleImage = (ImageView) itemView.findViewById(R.id.image_view_news_img);
+                imageView_articleSourceLogo = (ImageView) itemView.findViewById(R.id.imageview_source_logo);
+                textView_timeStamp = (TextView) itemView.findViewById(R.id.text_view_news_datetime);
+                article_options_layout = (LinearLayout) itemView.findViewById(R.id.article_options);
+                article_contents_layout = (LinearLayout) itemView.findViewById(R.id.article_content);
+                shareImageButton = (ImageButton) itemView.findViewById(R.id.share_imagebutton);
+                bookmarkImageButton = (ImageButton) itemView.findViewById(R.id.bookmark_article_imagebutton);
+                swipeRevealLayout = (SwipeRevealLayout)itemView.findViewById(R.id.swipeRevealLayout);
+                progressBar = (ProgressBar)itemView.findViewById(R.id.progressBarNewsItem);
+            }
+
+            @Override
+            public void onClick(View view) {
+                //Log.d("RECYCLER-CLICK-EVENTS","Item Clicked at position "+getLayoutPosition());
+            }
+
+            @Override
+            public boolean onLongClick(View view) {
+                //Log.d("RECYCLER-CLICK-EVENTS","Item Long-Clicked at position "+getLayoutPosition());
+                return true;
+            }
+        }
+
     }
 
     public class fetch extends AsyncTask<String,Void,ArrayList> {
@@ -504,7 +788,7 @@ public class EntertainmentNewsActivity extends AppCompatActivity {
 
     private void showUpdateFeedSnackBar() {
         RelativeLayout root_relative_layout = findViewById(R.id.root_relative_layout);
-        Snackbar snackbar = Snackbar.make(root_relative_layout, "FEED UPDATED", Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(root_relative_layout, "Feed Updated", Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.rgb(255, 193, 7));
@@ -531,149 +815,51 @@ public class EntertainmentNewsActivity extends AppCompatActivity {
 
     }
 
-    public class EntertainmentRecyclerAdapter extends RecyclerView.Adapter<EntertainmentRecyclerAdapter.ViewHolder> {
-        private ArrayList<NewsItemObject> newsItemObjects;
-        ImageLoader imageLoader = new ImageLoader(EntertainmentNewsActivity.this);
-        private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    public class SaveArticleTask extends AsyncTask<NewsItemObject,Void,String> {
 
-        public EntertainmentRecyclerAdapter(ArrayList<NewsItemObject> newsItems){
-            this.newsItemObjects = newsItems;
+        NewsItemObject object;
+        EntertainmentRecyclerAdapter.ViewHolder holder;
+
+        public SaveArticleTask(EntertainmentRecyclerAdapter.ViewHolder viewHolder){
+            this.holder = viewHolder;
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.holder.progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
-        public EntertainmentRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_short, parent, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
+        protected String doInBackground(NewsItemObject... objects) {
+            String responseString = null;
+            NewsItemObject object = objects[0];
+            this.object = object;
+            try {
+                URL url = new URL(object.getUrl());
+                responseString = null;
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                responseString = convertStreamToString(in);
+                urlConnection.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return responseString;
         }
 
         @Override
-        public void onBindViewHolder(final EntertainmentRecyclerAdapter.ViewHolder holder, final int position) {
-            viewBinderHelper.bind(holder.swipeRevealLayout, newsItemObjects.get(position).getId());
-            holder.textView_Headline.setText(newsItemObjects.get(position).getTitle());
-            holder.textView_Description.setText(newsItemObjects.get(position).getDescription());
-            holder.textView_Source.setText(newsItemObjects.get(position).getSource());
-            imageLoader.DisplayImage(newsItemObjects.get(position).getImgurl(),holder.imageView_articleImage);
-            holder.imageView_articleSourceLogo.setImageDrawable(newsItemObjects.get(position).getArticleSourceLogo());
-            //holder.imageView_articleImage.setImageBitmap(newsItemObjects.get(position).getArticleImage());
-            String dateString = newsItemObjects.get(position).getArticleDate();
-            holder.textView_timeStamp.setText(dateString);
-            holder.article_options_layout.setBackgroundColor(newsItemObjects.get(position).getOptionsColor());
-
-            holder.article_contents_layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Open article for reading
-                    String selectedArticleURL  = newsItemObjects.get(position).getUrl();
-                    Intent viewArticleIntent = new Intent(EntertainmentNewsActivity.this,ReadArticleActivity.class);
-                    //viewArticleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                    viewArticleIntent.putExtra("URL",selectedArticleURL);
-                    try{
-                        startActivity(viewArticleIntent);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-
-            holder.shareImageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent mIntent = new Intent(android.content.Intent.ACTION_SEND);
-                    mIntent.setType("text/plain");
-                    String shareString = newsItemObjects.get(position).getUrl() + "\n\n" +
-                            newsItemObjects.get(position).getTitle() + "\n\n" +
-                            "Shared from News Stand App";
-                    mIntent.putExtra(Intent.EXTRA_TEXT, shareString);
-                    //mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Intent i = Intent.createChooser(mIntent, "Share this article");
-                    //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(i);
-                    holder.swipeRevealLayout.close(true);
-                }
-            });
-
-            holder.bookmarkImageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(newsItemObjects.get(position).isBookmarked()){
-                        //holder.bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_border_white_48dp);
-                        newsItemObjects.get(position).setBookmarked(false);
-                        removeFromBookmarkedArticles(newsItemObjects.get(position));
-                        Toast.makeText(EntertainmentNewsActivity.this, "Article removed from offline reading", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        //holder.bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_white_48dp);
-                        newsItemObjects.get(position).setBookmarked(true);
-                        addToBookmarkedArticles(newsItemObjects.get(position));
-                        Toast.makeText(EntertainmentNewsActivity.this, "Article saved for offline reading", Toast.LENGTH_SHORT).show();
-                    }
-
-                    holder.swipeRevealLayout.close(true);
-                }
-            });
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return newsItemObjects.size();
-        }
-
-        public ArrayList getNewsItemObjects(){
-            return this.newsItemObjects;
-        }
-
-        public void setNewsItemObjects(ArrayList newsItemObjects){
-            this.newsItemObjects = newsItemObjects;
-        }
-
-        public void clear() {
-            int size = this.newsItemObjects.size();
-            this.newsItemObjects.clear();
-            notifyItemRangeRemoved(0, size);
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
-            protected TextView textView_Headline;
-            protected TextView textView_Description;
-            protected TextView textView_Source;
-            protected ImageView imageView_articleImage;
-            protected TextView textView_timeStamp;
-            protected ImageView imageView_articleSourceLogo;
-            protected LinearLayout article_options_layout;
-            protected LinearLayout article_contents_layout;
-            protected ImageButton shareImageButton;
-            protected ImageButton bookmarkImageButton;
-            protected SwipeRevealLayout swipeRevealLayout;
-            public ViewHolder(View itemView) {
-                super(itemView);
-                textView_Headline =  (TextView) itemView.findViewById(R.id.text_view_news_head);
-                textView_Description =  (TextView) itemView.findViewById(R.id.text_view_news_desc);
-                textView_Source =  (TextView) itemView.findViewById(R.id.text_view_news_source);
-                imageView_articleImage = (ImageView) itemView.findViewById(R.id.image_view_news_img);
-                imageView_articleSourceLogo = (ImageView) itemView.findViewById(R.id.imageview_source_logo);
-                textView_timeStamp = (TextView) itemView.findViewById(R.id.text_view_news_datetime);
-                article_options_layout = (LinearLayout) itemView.findViewById(R.id.article_options);
-                article_contents_layout = (LinearLayout) itemView.findViewById(R.id.article_content);
-                shareImageButton = (ImageButton) itemView.findViewById(R.id.share_imagebutton);
-                bookmarkImageButton = (ImageButton) itemView.findViewById(R.id.bookmark_article_imagebutton);
-                swipeRevealLayout = (SwipeRevealLayout)itemView.findViewById(R.id.swipeRevealLayout);
-            }
-
-            @Override
-            public void onClick(View view) {
-                //Log.d("RECYCLER-CLICK-EVENTS","Item Clicked at position "+getLayoutPosition());
-            }
-
-            @Override
-            public boolean onLongClick(View view) {
-                //Log.d("RECYCLER-CLICK-EVENTS","Item Long-Clicked at position "+getLayoutPosition());
-                return true;
-            }
+        protected void onPostExecute(String responseString) {
+            super.onPostExecute(responseString);
+            object.setArticleContent(responseString);
+            addToBookmarkedArticles(object);
+            this.holder.progressBar.setVisibility(View.GONE);
+            Toast.makeText(EntertainmentNewsActivity.this, "Article saved for offline reading", Toast.LENGTH_SHORT).show();
         }
 
     }
+
 
 }
