@@ -52,7 +52,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#4CAF50</item>
         <item name="colorPrimaryDark">#4CAF50</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#4CAF50</item>
     </style>
 
     <style name="SportsNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -66,7 +66,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorPrimaryDark">#3F51B5</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#3F51B5</item>
     </style>
 
     <style name="BusinessNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -80,7 +80,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#F44336</item>
         <item name="colorPrimaryDark">#F44336</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#F44336</item>
     </style>
 
     <style name="HealthNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -94,7 +94,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#64DD17</item>
         <item name="colorPrimaryDark">#64DD17</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#64DD17</item>
     </style>
 
     <style name="GeneralNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -108,7 +108,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#FFC107</item>
         <item name="colorPrimaryDark">#FFC107</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#FFC107</item>
     </style>
 
     <style name="EntertainmentNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -123,7 +123,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#18FFFF</item>
         <item name="colorPrimaryDark">#18FFFF</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#18FFFF</item>
     </style>
 
     <style name="ScienceNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -137,7 +137,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#9C27B0</item>
         <item name="colorPrimaryDark">#9C27B0</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#9C27B0</item>
     </style>
 
     <style name="OfflineNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -151,7 +151,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#E91E63</item>
         <item name="colorPrimaryDark">#E91E63</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#E91E63</item>
     </style>
 
     <style name="CustomNews_LinearProgress" parent="Theme.AppCompat.Light">
@@ -173,7 +173,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">#212121</item>
         <item name="colorPrimaryDark">#212121</item>
-        <item name="colorAccent">#FFFFFF</item>
+        <item name="colorAccent">#212121</item>
     </style>
 
     <style name="AllArticles_LinearProgress" parent="Theme.AppCompat.Light">
