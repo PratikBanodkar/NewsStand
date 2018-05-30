@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -68,7 +67,7 @@ public class ArticlesTab extends Fragment {
 
         ArrayList sportsSourceLogos = new ArrayList();
         sportsSourceLogos.add(R.drawable.bbc_sport);sportsSourceLogos.add(R.drawable.bleacher_report);sportsSourceLogos.add(R.drawable.espn);
-        sportsSourceLogos.add(R.drawable.espncricinfo);sportsSourceLogos.add(R.drawable.football_italia);sportsSourceLogos.add(R.drawable.four_four_two);
+        sportsSourceLogos.add(R.drawable.espn_cric_info);sportsSourceLogos.add(R.drawable.football_italia);sportsSourceLogos.add(R.drawable.four_four_two);
         sportsSourceLogos.add(R.drawable.fox_sports);sportsSourceLogos.add(R.drawable.nfl_news);sportsSourceLogos.add(R.drawable.nhl_news);
         sportsSourceLogos.add(R.drawable.talksport);sportsSourceLogos.add(R.drawable.the_sport_bible);
 
