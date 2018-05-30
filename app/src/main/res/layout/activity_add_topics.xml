@@ -1123,7 +1123,7 @@
                         android:layout_gravity="top"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/espncricinfo" />
+                        android:src="@drawable/espn_cric_info" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
