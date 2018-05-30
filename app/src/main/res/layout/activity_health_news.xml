@@ -83,6 +83,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="32dp"
+                android:id="@+id/noInternetLayout"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="24sp"
+                    android:typeface="monospace"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:id="@+id/noInternetLayout_Textview"
+                    android:text="No Internet Connection"
+                    android:textColor="#212121"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/filterByValue_textview"
                 android:layout_width="match_parent"
