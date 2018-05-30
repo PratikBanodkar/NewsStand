@@ -23,6 +23,8 @@
         android:layout_below="@+id/applogo_imageView"
         android:fontFamily="cursive"
         android:gravity="center"
+        android:maxLines="2"
+        android:textAlignment="center"
         android:text="News Stand"
         android:textColor="#E0E0E0"
         android:textSize="64sp"
