@@ -21,4 +21,9 @@ public class MyApplication extends Application {
         ConnectivityReceiver.connectivityReceiverListener = listener;
     }
 
+    public void removeConnectivityListener() {
+        ConnectivityReceiver.connectivityReceiverListener = null;
+    }
+
+
 }
