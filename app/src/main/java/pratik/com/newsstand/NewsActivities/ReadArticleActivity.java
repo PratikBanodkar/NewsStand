@@ -28,15 +28,8 @@ public class ReadArticleActivity extends AppCompatActivity {
         actionBar.hide();
 
         WebView mWebView = findViewById(R.id.article_webview);
-        WebSettings webSettings = mWebView.getSettings();
-        //webSettings.setJavaScriptEnabled(true);
+
         final String url = getIntent().getExtras().getString("URL");
-        if(url == null)
-            mWebView.loadData(getIntent().getExtras().getString("CONTENT"),"text/html","UTF-8");
-        else
-            mWebView.loadUrl(url);
-
-
         final ProgressBar progressBar = findViewById(R.id.progressBar);
 
         mWebView.setWebChromeClient(new WebChromeClient() {
@@ -48,27 +41,29 @@ public class ReadArticleActivity extends AppCompatActivity {
 
             }
         });
-        mWebView.setWebViewClient(new WebViewClient(){
 
+        mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url2=request.getUrl().toString();
                 // all links  with in ur site will be open inside the webview
-                //links that start ur domain example(http://www.chatadda.com/)
                 if (url != null && url.startsWith(url2)){
                     return false;
                 }
                 // all links that points outside the site will be open in a normal android browser
                 else  {
-                    view.getContext().startActivity(
-                            new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     return true;
                 }
             }
         });
 
-    }
+        if(url == null)
+            mWebView.loadData(getIntent().getExtras().getString("CONTENT"),"text/html","UTF-8");
+        else
+            mWebView.loadUrl(url);
 
+    }
 
     public void closeArticleActivity(View v){
         this.finish();
