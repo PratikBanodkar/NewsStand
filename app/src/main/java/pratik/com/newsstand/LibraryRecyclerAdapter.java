@@ -71,7 +71,7 @@ public class LibraryRecyclerAdapter extends RecyclerView.Adapter<LibraryRecycler
                     allArticlesIntent.putExtras(mBundle);
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation((Activity)context,sourceLogo,"libraryToAllArticles");
-                    context.startActivity(allArticlesIntent);
+                    context.startActivity(allArticlesIntent,options.toBundle());
                 }
             });
             TextView sourceName = newView.findViewById(R.id.source_header);
