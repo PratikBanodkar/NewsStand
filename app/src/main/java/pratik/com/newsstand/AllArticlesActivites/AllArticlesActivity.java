@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -1003,6 +1004,7 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
                 }
             });
 
+            holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
         }
 
         @Override
