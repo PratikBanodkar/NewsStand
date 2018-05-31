@@ -127,7 +127,6 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        String source = extras.getString("Source");
         source_id = extras.getString("Source ID");
 
         Date cDate = new Date();
@@ -639,8 +638,6 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
 
             listener.onTaskComplete(newsItemObjectArrayList,AllArticlesActivity.this);
         }
-
-
     }
 
     public class append extends AsyncTask<String,Void,ArrayList> {
@@ -788,7 +785,6 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
         public void onTaskComplete(ArrayList newsItems, Activity ca) {
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
             recyclerView.setHasFixedSize(true);
-            //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ca.getApplicationContext());
             recyclerView.setLayoutManager(layoutManager);
             RecyclerView.Adapter adapter = new AllArticlesRecyclerAdapter(newsItems);
             recyclerView.setAdapter(adapter);
@@ -808,10 +804,8 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
         public void onTaskComplete(ArrayList newsItems, Activity ca) {
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
             recyclerView.setHasFixedSize(true);
-            //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ca.getApplicationContext());
             recyclerView.setLayoutManager(layoutManager);
             RecyclerView.Adapter adapter = new AllArticlesRecyclerAdapter(newsItems);
-            //adapter.notifyItemRangeInserted(newsItems.size(),articlesFetched);
             recyclerView.setAdapter(adapter);
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
 
@@ -943,7 +937,6 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
             holder.textView_Source.setText(newsItemObjects.get(position).getSource());
             imageLoader.DisplayImage(newsItemObjects.get(position).getImgurl(),holder.imageView_articleImage);
             holder.imageView_articleSourceLogo.setImageDrawable(newsItemObjects.get(position).getArticleSourceLogo());
-            //holder.imageView_articleImage.setImageBitmap(newsItemObjects.get(position).getArticleImage());
             String dateString = newsItemObjects.get(position).getArticleDate();
             holder.textView_timeStamp.setText(dateString);
             holder.article_options_layout.setBackgroundColor(newsItemObjects.get(position).getOptionsColor());
@@ -954,7 +947,6 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
                     //Open article for reading
                     String selectedArticleURL  = newsItemObjects.get(position).getUrl();
                     Intent viewArticleIntent = new Intent(AllArticlesActivity.this,ReadArticleActivity.class);
-                    //viewArticleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     viewArticleIntent.putExtra("URL",selectedArticleURL);
                     try{
                         startActivity(viewArticleIntent);
@@ -974,9 +966,7 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
                             newsItemObjects.get(position).getTitle() + "\n\n" +
                             "Shared from News Stand App";
                     mIntent.putExtra(Intent.EXTRA_TEXT, shareString);
-                    //mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Intent i = Intent.createChooser(mIntent, "Share this article");
-                    //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                     holder.swipeRevealLayout.close(true);
                 }
@@ -986,7 +976,6 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
                 @Override
                 public void onClick(View view) {
                     if(newsItemObjects.get(position).isBookmarked()){
-                        //holder.bookmarkImageButton.setImageResource(R.drawable.ic_bookmark_border_white_48dp);
                         newsItemObjects.get(position).setBookmarked(false);
                         removeFromBookmarkedArticles(newsItemObjects.get(position));
                         Toast.makeText(AllArticlesActivity.this, "Article removed from offline reading", Toast.LENGTH_SHORT).show();
@@ -1056,15 +1045,10 @@ public class AllArticlesActivity extends AppCompatActivity implements Connectivi
             }
 
             @Override
-            public void onClick(View view) {
-                //Log.d("RECYCLER-CLICK-EVENTS","Item Clicked at position "+getLayoutPosition());
-            }
+            public void onClick(View view) {}
 
             @Override
-            public boolean onLongClick(View view) {
-                //Log.d("RECYCLER-CLICK-EVENTS","Item Long-Clicked at position "+getLayoutPosition());
-                return true;
-            }
+            public boolean onLongClick(View view) {return true;}
         }
 
     }
