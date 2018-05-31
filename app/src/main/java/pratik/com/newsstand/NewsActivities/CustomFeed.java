@@ -387,20 +387,35 @@ public class CustomFeed extends AppCompatActivity implements ConnectivityReceive
         if(!checkConnection())
             showNoInternetSnackBar();
         else{
-            updateFeedRequested = true;
-            recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
-            CustomFeedRecyclerAdapter recyclerAdapter = (CustomFeedRecyclerAdapter) recyclerView.getAdapter();
-            recyclerAdapter.clear();
-            TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
-            ProgressBar progressBar = findViewById(R.id.progressBar);
-            if (fetchingNewsLabel.getVisibility()==View.GONE){
-                fetchingNewsLabel.setVisibility(View.VISIBLE);
-            }
-            if(progressBar.getVisibility()==View.GONE)
-                progressBar.setVisibility(View.VISIBLE);
+            if(feedURL != null){
+                updateFeedRequested = true;
+                recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+                CustomFeedRecyclerAdapter recyclerAdapter = (CustomFeedRecyclerAdapter) recyclerView.getAdapter();
+                recyclerAdapter.clear();
+                TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
+                ProgressBar progressBar = findViewById(R.id.progressBar);
+                if (fetchingNewsLabel.getVisibility()==View.GONE){
+                    fetchingNewsLabel.setVisibility(View.VISIBLE);
+                }
+                if(progressBar.getVisibility()==View.GONE)
+                    progressBar.setVisibility(View.VISIBLE);
 
-            fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
-            new fetch(listener).execute(feedURL);
+                fetch_completeListener listener = new fetch_completeListener(new ArrayList<NewsItemObject>(),this);
+                new fetch(listener).execute(feedURL);
+            }
+            else{
+                String message;
+                int color;
+                message = "No feed configured yet";
+                color = Color.rgb(233,30,99);
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.parent_relative_layout), message, Snackbar.LENGTH_LONG);
+
+                View sbView = snackbar.getView();
+                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(color);
+                snackbar.show();
+            }
         }
     }
 
