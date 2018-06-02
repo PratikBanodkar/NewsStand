@@ -172,59 +172,45 @@ public class AddTopicsActivity extends AppCompatActivity {
         switch (v.getId()){
             case R.id.save_tech_sources_button:
                 flipper.setDisplayedChild(0);
-                //getTechSources();
                 break;
             case R.id.save_sports_sources_button:
                 flipper.setDisplayedChild(0);
-                //getSportsSources();
                 break;
             case R.id.save_business_sources_button:
                 flipper.setDisplayedChild(0);
-                //getBusinessSources();
                 break;
             case R.id.save_health_sources_button:
                 flipper.setDisplayedChild(0);
-                //getHealthSources();
                 break;
             case R.id.save_general_sources_button:
                 flipper.setDisplayedChild(0);
-                //getGeneralSources();
                 break;
             case R.id.save_entertainment_sources_button:
                 flipper.setDisplayedChild(0);
-                //getEntertainmentSources();
                 break;
             case R.id.save_science_sources_button:
                 flipper.setDisplayedChild(0);
-                //getScienceSources();
                 break;
             case R.id.add_tech_imagebutton:
                 flipper.setDisplayedChild(1);
-                //setTechCheckboxes(old_sources);
                 break;
             case R.id.add_sports_imagebutton:
                 flipper.setDisplayedChild(2);
-                //setSportsCheckboxes(old_sources);
                 break;
             case R.id.add_business_imagebutton:
                 flipper.setDisplayedChild(3);
-                //setBusinessCheckboxes(old_sources);
                 break;
             case R.id.add_health_imagebutton:
                 flipper.setDisplayedChild(4);
-                //setHealthCheckboxes(old_sources);
                 break;
             case R.id.add_general_imagebutton:
                 flipper.setDisplayedChild(5);
-                //setGeneralCheckboxes(old_sources);
                 break;
             case R.id.add_entertainment_imagebutton:
                 flipper.setDisplayedChild(6);
-                //setEntertainmentCheckboxes(old_sources);
                 break;
             case R.id.add_science_imagebutton:
                 flipper.setDisplayedChild(7);
-                //setScienceCheckboxes(old_sources);
                 break;
         }
     }
