@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name=".Library"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme_WithTitle" />
 
         <meta-data
