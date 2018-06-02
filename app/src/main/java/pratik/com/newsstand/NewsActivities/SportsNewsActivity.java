@@ -538,7 +538,10 @@ public class SportsNewsActivity extends AppCompatActivity implements Connectivit
                 .create();
         Type type = new TypeToken<List<NewsItemObject>>(){}.getType();
         List<NewsItemObject> savedArticles_Retrieved = gson.fromJson(json_string_saved_articles, type);
-        savedArticles_Retrieved.remove(newsObj);
+        for(int i=0;i<savedArticles_Retrieved.size();i++){
+            if(savedArticles_Retrieved.get(i).getUrl().equals(newsObj.getUrl()))
+                savedArticles_Retrieved.remove(i);
+        }
         json_string_saved_articles = gson.toJson(savedArticles_Retrieved);
         prefsEditor.putString("Bookmarked",json_string_saved_articles);
         prefsEditor.commit();
