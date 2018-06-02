@@ -41,7 +41,6 @@ public class Library extends AppCompatActivity {
     private TabLayout tabLayout;
     private CustomViewPager viewPager;
     private AdView mAdView;
-    private TextView internetStatusTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,6 @@ public class Library extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        internetStatusTextview = findViewById(R.id.internet_status);
 
         tabLayout = findViewById(R.id.library_tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Top Headlines"));
