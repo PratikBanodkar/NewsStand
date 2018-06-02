@@ -17,13 +17,13 @@ public class WelcomeScreen extends AppCompatActivity {
         setTitle(null);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("User Preferences", Context.MODE_PRIVATE);
-        Boolean set = pref.getBoolean("PREFERENCES SET",false);
-        //System.out.println("Welcome-Pref Set? "+set);
     }
 
     public void showLibrary(View v){
-        //Intent intent = new Intent(WelcomeScreen.this,Library.class);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("pratik.com.newsstand.ufsa", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("Got Started",true);
+        editor.commit();
         Intent intent = new Intent(WelcomeScreen.this,Library.class);
         startActivity(intent);
         finish();
