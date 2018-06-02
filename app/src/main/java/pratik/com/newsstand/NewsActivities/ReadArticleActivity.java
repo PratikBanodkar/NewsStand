@@ -42,7 +42,7 @@ public class ReadArticleActivity extends AppCompatActivity {
             }
         });
 
-        mWebView.setWebViewClient(new WebViewClient(){
+        /*mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url2=request.getUrl().toString();
@@ -56,7 +56,8 @@ public class ReadArticleActivity extends AppCompatActivity {
                     return true;
                 }
             }
-        });
+        });*/
+        mWebView.setWebViewClient(new WebViewClient());
 
         if(url == null)
             mWebView.loadData(getIntent().getExtras().getString("CONTENT"),"text/html","UTF-8");
