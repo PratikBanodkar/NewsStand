@@ -4783,7 +4783,7 @@
                         android:layout_gravity="top"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/medical_news_today" />
+                        android:src="@drawable/national_geographic" />
 
                     <RelativeLayout
                         android:id="@+id/nat_geo_inner"
