@@ -136,7 +136,10 @@ public class PreferenceInput extends AppCompatActivity {
         String jsonString_of_latest_sources = gson.toJson(latest_sources);
         editor.putString("Source Array", jsonString_of_latest_sources);
         editor.putBoolean("Show on load",switchStatus);
-        editor.putString("Feed URL",constructFeedURL(latest_sourceIDs));
+        if(latest_sourceIDs.size() !=0)
+            editor.putString("Feed URL",constructFeedURL(latest_sourceIDs));
+        else
+            editor.putString("Feed URL",null);
         editor.apply();
         Toast.makeText(getApplicationContext(), "Feed settings saved successfully",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
@@ -212,7 +215,10 @@ public class PreferenceInput extends AppCompatActivity {
                         String jsonString_of_latest_sources = gson.toJson(latest_sources);
                         editor.putString("Source Array", jsonString_of_latest_sources);
                         editor.putBoolean("Show on load", switchStatus);
-                        editor.putString("Feed URL",constructFeedURL(latest_sourceIDs));
+                        if(latest_sourceIDs.size()!=0)
+                            editor.putString("Feed URL",constructFeedURL(latest_sourceIDs));
+                        else
+                            editor.putString("Feed URL",null);
                         editor.apply();
                         Toast.makeText(getApplicationContext(), "Feed settings saved successfully",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
