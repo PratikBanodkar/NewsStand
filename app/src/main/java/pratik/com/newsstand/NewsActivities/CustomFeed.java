@@ -69,6 +69,7 @@ import pratik.com.newsstand.AllArticlesActivites.AllArticlesActivity;
 import pratik.com.newsstand.Connectivity.ConnectivityReceiver;
 import pratik.com.newsstand.Connectivity.MyApplication;
 import pratik.com.newsstand.ExclusionStrategy_Bitmap_Drawable;
+import pratik.com.newsstand.Library;
 import pratik.com.newsstand.NewsFetching.ArticleImageFetching.ImageLoader;
 import pratik.com.newsstand.NewsFetching.AsyncTaskCompleteListener;
 import pratik.com.newsstand.NewsFetching.NewsItemObject;
@@ -425,8 +426,11 @@ public class CustomFeed extends AppCompatActivity implements ConnectivityReceive
         else{
             updateFeedRequested = true;
             recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+            if(recyclerView.getVisibility() == View.GONE)
+                recyclerView.setVisibility(View.VISIBLE);
             CustomFeedRecyclerAdapter recyclerAdapter = (CustomFeedRecyclerAdapter) recyclerView.getAdapter();
-            recyclerAdapter.clear();
+            if(recyclerAdapter != null)
+                recyclerAdapter.clear();
             TextView fetchingNewsLabel = findViewById(R.id.fetching_news_label);
             ProgressBar progressBar = findViewById(R.id.progressBar);
             if (fetchingNewsLabel.getVisibility()==View.GONE){
@@ -562,6 +566,12 @@ public class CustomFeed extends AppCompatActivity implements ConnectivityReceive
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.rgb(233,30,99));
         snackbar.show();
+    }
+
+    public void goToLibraryScreen(View view) {
+        Intent intent = new Intent(this, Library.class);
+        finish();
+        startActivity(intent);
     }
 
     public class fetch extends AsyncTask<String,Void,ArrayList> {
