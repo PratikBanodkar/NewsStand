@@ -86,8 +86,6 @@ public class BusinessNewsActivity extends AppCompatActivity implements Connectiv
     private String rationalMessage;
     private String[] permissions = new String[1];
     private static final int REQUEST_CODE = 1000;
-    SharedPreferences savedArticlesPref;
-    private ArrayList<String> bookmarkedArticles_String;
 
     @Override
     protected void onResume() {
@@ -158,8 +156,6 @@ public class BusinessNewsActivity extends AppCompatActivity implements Connectiv
     }
 
     private boolean checkConnection() {
-        //boolean isConnected = ConnectivityReceiver.isConnected();
-        //showSnack(isConnected);
         return ConnectivityReceiver.isConnected();
     }
 
@@ -527,7 +523,6 @@ public class BusinessNewsActivity extends AppCompatActivity implements Connectiv
             holder.textView_Source.setText(newsItemObjects.get(position).getSource());
             imageLoader.DisplayImage(newsItemObjects.get(position).getImgurl(),holder.imageView_articleImage);
             holder.imageView_articleSourceLogo.setImageDrawable(newsItemObjects.get(position).getArticleSourceLogo());
-            //holder.imageView_articleImage.setImageBitmap(newsItemObjects.get(position).getArticleImage());
             String dateString = newsItemObjects.get(position).getArticleDate();
             holder.textView_timeStamp.setText(dateString);
             holder.article_options_layout.setBackgroundColor(newsItemObjects.get(position).getOptionsColor());
@@ -538,7 +533,6 @@ public class BusinessNewsActivity extends AppCompatActivity implements Connectiv
                     //Open article for reading
                     String selectedArticleURL  = newsItemObjects.get(position).getUrl();
                     Intent viewArticleIntent = new Intent(BusinessNewsActivity.this,ReadArticleActivity.class);
-                    //viewArticleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                     viewArticleIntent.putExtra("URL",selectedArticleURL);
                     try{
                         startActivity(viewArticleIntent);
@@ -636,12 +630,10 @@ public class BusinessNewsActivity extends AppCompatActivity implements Connectiv
 
             @Override
             public void onClick(View view) {
-                //Log.d("RECYCLER-CLICK-EVENTS","Item Clicked at position "+getLayoutPosition());
             }
 
             @Override
             public boolean onLongClick(View view) {
-                //Log.d("RECYCLER-CLICK-EVENTS","Item Long-Clicked at position "+getLayoutPosition());
                 return true;
             }
         }
