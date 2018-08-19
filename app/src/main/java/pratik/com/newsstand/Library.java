@@ -45,18 +45,16 @@ public class Library extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_library);
         setContentView(R.layout.activity_library);
         setTitle(null);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         SharedPreferences pref = getApplicationContext().getSharedPreferences("User Preferences", Context.MODE_PRIVATE);
         Boolean set = pref.getBoolean("PREFERENCES SET",false);
-        //MobileAds.initialize(this, getResources().getString(R.string.appid_admob));
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
+        /*MobileAds.initialize(this, getResources().getString(R.string.appid_admob));
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
 
         tabLayout = findViewById(R.id.library_tabs);

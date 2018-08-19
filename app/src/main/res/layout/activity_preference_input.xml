@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
         android:background="#E91E63"
         app:titleTextColor="#FFFFFF"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
@@ -109,9 +109,9 @@
                     android:id="@+id/addToFeed_Textview"
                     android:clickable="true"
                     android:onClick="goToAddSourcesScreen"
-                    android:drawableEnd="@drawable/ic_add_black_48dp"
-                    android:drawableRight="@drawable/ic_add_black_48dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:drawableEnd="@drawable/baseline_add_black_24"
+                    android:drawableRight="@drawable/baseline_add_black_24"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
                     android:gravity="center_vertical"
                     android:textColor="#111111"

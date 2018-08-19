@@ -75,9 +75,9 @@
                     <ImageButton
                         android:onClick="changeViewToShow"
                         android:id="@+id/add_tech_imagebutton"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add_black_48dp"
+                        android:src="@drawable/baseline_add_black_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
 
@@ -116,9 +116,9 @@
                     <ImageButton
                         android:onClick="changeViewToShow"
                         android:id="@+id/add_sports_imagebutton"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add_black_48dp"
+                        android:src="@drawable/baseline_add_black_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
 
@@ -157,9 +157,9 @@
                     <ImageButton
                         android:onClick="changeViewToShow"
                         android:id="@+id/add_business_imagebutton"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add_black_48dp"
+                        android:src="@drawable/baseline_add_black_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
 
@@ -198,9 +198,9 @@
                     <ImageButton
                         android:onClick="changeViewToShow"
                         android:id="@+id/add_health_imagebutton"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add_black_48dp"
+                        android:src="@drawable/baseline_add_black_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
 
@@ -239,9 +239,9 @@
                     <ImageButton
                         android:onClick="changeViewToShow"
                         android:id="@+id/add_general_imagebutton"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add_black_48dp"
+                        android:src="@drawable/baseline_add_black_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
 
@@ -280,9 +280,9 @@
                     <ImageButton
                         android:onClick="changeViewToShow"
                         android:id="@+id/add_entertainment_imagebutton"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add_black_48dp"
+                        android:src="@drawable/baseline_add_black_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
 
@@ -320,9 +320,9 @@
                     <ImageButton
                         android:onClick="changeViewToShow"
                         android:id="@+id/add_science_imagebutton"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_add_black_48dp"
+                        android:src="@drawable/baseline_add_black_24"
                         android:layout_width="50dp"
                         android:layout_height="50dp" />
 
@@ -2017,7 +2017,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:fontFamily="sans-serif-condensed"
-                            android:text="Wall Street Journal"
+                            android:text="The Wall Street Journal"
                             android:textColor="#000000"
                             android:textSize="18sp"
                             android:textStyle="bold"

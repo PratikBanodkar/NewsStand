@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/bg_screen1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Library"
+            android:textAlignment="center"
+            android:fontFamily="sans-serif-condensed"
+            android:typeface="monospace"
+            android:textColor="@android:color/white"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/onboarding_1" />
+
+        <TextView
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:gravity="top"
+            android:paddingTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-condensed"
+            android:typeface="monospace"
+            android:text="Use the Library to access Top Headlines or Articles"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+</LinearLayout>

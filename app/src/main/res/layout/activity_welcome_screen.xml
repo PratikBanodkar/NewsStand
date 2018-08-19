@@ -10,7 +10,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#212121"
         tools:context="pratik.com.newsstand.WelcomeScreen">
 
@@ -214,12 +214,13 @@
         <Button
             android:layout_below="@+id/textView5"
             android:id="@+id/get_started_button"
-            android:onClick="showLibrary"
+            android:onClick="showOnBoarding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:background="@drawable/get_started_custom_button"

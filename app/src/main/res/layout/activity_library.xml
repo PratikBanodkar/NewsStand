@@ -51,7 +51,7 @@
             app:tabGravity="fill"
             />
 
-        <com.google.android.gms.ads.AdView
+        <!--<com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
             android:layout_width="wrap_content"
@@ -59,11 +59,11 @@
             android:layout_below="@+id/library_tabs"
             android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="ca-app-pub-2391183206566070/6777383034">
+        </com.google.android.gms.ads.AdView>-->
 
         <pratik.com.newsstand.CustomViewPager
-            android:layout_below="@id/adView"
+            android:layout_below="@id/library_tabs"
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

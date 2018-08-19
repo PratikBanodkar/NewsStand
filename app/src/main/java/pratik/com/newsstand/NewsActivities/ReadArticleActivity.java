@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -28,6 +30,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         actionBar.hide();
 
         WebView mWebView = findViewById(R.id.article_webview);
+        mWebView.getSettings().setJavaScriptEnabled(true);
 
         final String url = getIntent().getExtras().getString("URL");
         final ProgressBar progressBar = findViewById(R.id.progressBar);

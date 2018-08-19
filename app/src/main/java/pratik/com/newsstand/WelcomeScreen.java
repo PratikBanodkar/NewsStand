@@ -19,12 +19,8 @@ public class WelcomeScreen extends AppCompatActivity {
         actionBar.hide();
     }
 
-    public void showLibrary(View v){
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("pratik.com.newsstand.ufsa", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("Got Started",true);
-        editor.commit();
-        Intent intent = new Intent(WelcomeScreen.this,Library.class);
+    public void showOnBoarding(View v){
+        Intent intent = new Intent(WelcomeScreen.this,OnBoarding.class);
         startActivity(intent);
         finish();
     }

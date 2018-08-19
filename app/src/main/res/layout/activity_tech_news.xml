@@ -29,7 +29,7 @@
                 android:layout_height="250dp"
                 android:background="#FF9800"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="?android:attr/colorPrimary"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -48,7 +48,7 @@
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="?android:attr/actionBarSize"
                     android:background="#FF9800"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
@@ -64,11 +64,13 @@
                     <ImageButton
                         android:id="@+id/refresh_feed_imagebutton"
                         android:onClick="refreshFeed"
-                        android:padding="4dp"
+                        android:layout_marginTop="16dp"
+                        android:paddingEnd="4dp"
+                        android:paddingStart="0dp"
                         android:scaleType="centerInside"
                         android:layout_marginEnd="4dp"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/ic_refresh_white_48dp"
+                        android:src="@drawable/baseline_refresh_white_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>

@@ -72,7 +72,7 @@
             android:theme="@style/CustomNewsTheme" />
         <activity
             android:name=".AllArticlesActivites.AllArticlesActivity"
-            android:theme="@style/AllArticlesTheme"/>
+            android:theme="@style/AllArticlesTheme" />
 
         <receiver
             android:name=".Connectivity.ConnectivityReceiver"
@@ -82,6 +82,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".OnBoarding"></activity>
     </application>
 
 </manifest>

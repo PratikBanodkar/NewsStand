@@ -309,7 +309,7 @@ public class AddTopicsActivity extends AppCompatActivity {
                 financial_times.setChecked(true);
             if(s.equals("Fortune"))
                 fortune.setChecked(true);
-            if(s.equals("Wall Street Journal"))
+            if(s.equals("The Wall Street Journal"))
                 wsj.setChecked(true);
         }
     }
@@ -476,7 +476,7 @@ public class AddTopicsActivity extends AppCompatActivity {
         if(financial_post.isChecked()) {businessSources.add(new Pair<>("financial-post","Financial Post"));}
         if(financial_times.isChecked()) {businessSources.add(new Pair<>("financial-times","Financial Times"));}
         if(fortune.isChecked()) {businessSources.add(new Pair<>("fortune","Fortune"));}
-        if(wsj.isChecked()) {businessSources.add(new Pair<>("wall-street-journal","Wall Street Journal"));}
+        if(wsj.isChecked()) {businessSources.add(new Pair<>("the-wall-street-journal","The Wall Street Journal"));}
     }
 
     public void getHealthSources(){
