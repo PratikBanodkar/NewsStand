@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".WelcomeScreen" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -26,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Library"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme_WithTitle" />
@@ -35,42 +37,55 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.TechNewsActivity"
             android:theme="@style/TechNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.SportsNewsActivity"
             android:theme="@style/SportsNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.BusinessNewsActivity"
             android:theme="@style/BusinessNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.HealthNewsActivity"
             android:theme="@style/HealthNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.GeneralNewsActivity"
             android:theme="@style/GeneralNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.EntertainmentNewsActivity"
             android:theme="@style/EntertainmentNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.ScienceNewsActivity"
             android:theme="@style/ScienceNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.ReadArticleActivity"
             android:theme="@style/Dark_Status_No_Title_Theme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.OfflineArticlesActivity"
             android:theme="@style/OfflineNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.CustomFeed"
             android:theme="@style/CustomNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.PreferenceInput"
             android:theme="@style/CustomNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".NewsActivities.AddTopicsActivity"
             android:theme="@style/CustomNewsTheme" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".AllArticlesActivites.AllArticlesActivity"
             android:theme="@style/AllArticlesTheme" />
 
@@ -82,7 +97,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".OnBoarding"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".OnBoarding"></activity>
     </application>
 
 </manifest>

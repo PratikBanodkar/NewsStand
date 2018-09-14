@@ -3,25 +3,18 @@ package pratik.com.newsstand;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import pratik.com.newsstand.Connectivity.ConnectivityReceiver;
-import pratik.com.newsstand.Connectivity.MyApplication;
+import com.google.android.gms.ads.AdView;
+
 import pratik.com.newsstand.NewsActivities.BusinessNewsActivity;
 import pratik.com.newsstand.NewsActivities.CustomFeed;
 import pratik.com.newsstand.NewsActivities.EntertainmentNewsActivity;
@@ -31,10 +24,6 @@ import pratik.com.newsstand.NewsActivities.OfflineArticlesActivity;
 import pratik.com.newsstand.NewsActivities.ScienceNewsActivity;
 import pratik.com.newsstand.NewsActivities.SportsNewsActivity;
 import pratik.com.newsstand.NewsActivities.TechNewsActivity;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 public class Library extends AppCompatActivity {
 
@@ -55,7 +44,6 @@ public class Library extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);*/
-
 
         tabLayout = findViewById(R.id.library_tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Top Headlines"));

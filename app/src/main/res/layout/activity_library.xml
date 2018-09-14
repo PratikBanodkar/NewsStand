@@ -64,9 +64,12 @@
 
         <pratik.com.newsstand.CustomViewPager
             android:layout_below="@id/library_tabs"
+            android:layout_marginTop="16dp"
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+
+
 
     </RelativeLayout>
